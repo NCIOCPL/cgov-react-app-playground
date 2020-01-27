@@ -1,7 +1,13 @@
+import { Router } from '@reach/router';
 import React, { useEffect } from "react";
 import { useStateValue } from "./store/store";
 import track from "react-tracking";
+
 import "./styles/dictionaries.scss";
+
+import { paths } from './constants';
+import DisplayGlossary from './views/DisplayGlossary';
+import SearchGlossary from './views/SearchGlossary';
 
 const App = ({ tracking }) => {
   // this should be a DUMB component that just displays our display(group) components
@@ -13,19 +19,10 @@ const App = ({ tracking }) => {
   }, [tracking]);
 
   return (
-    <div className="App">
-      <h1>{dictionaryName}</h1>
-
-      <div>
-        <p>Intro text which will be passed in</p>
-      </div>
-
-      <form aria-label={`Search the ${dictionaryName}`}>
-        Form/input will appear here
-      </form>
-
-      <div style={{ border: "1px dotted #aaa" }}>Results component here</div>
-    </div>
+      <Router basepath={`/`}>
+        <DisplayGlossary path={paths.HOME} dictionaryName={dictionaryName} />
+        <SearchGlossary path={paths.SEARCH} dictionaryName={dictionaryName} />
+      </Router>
   );
 };
 
