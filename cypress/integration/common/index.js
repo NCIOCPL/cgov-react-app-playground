@@ -1,5 +1,10 @@
-import { Given } from "cypress-cucumber-preprocessor/steps";
+import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
 
-Given("the user visits the home page", () => {
+Then('page title is {string}', (a) => {
+    cy.title().should('include', a)
+});
+
+Given('the user visits the home page', () => {
   cy.visit('http://localhost:3000/')
+
 });
