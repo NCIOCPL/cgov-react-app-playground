@@ -1,5 +1,5 @@
-import { Given } from "cypress-cucumber-preprocessor";
+import { Given } from "cypress-cucumber-preprocessor/steps";
 
 Given("the user visits the home page", () => {
-  crypto.visit('http://localhost:3000/')
+  cy.visit('http://localhost:3000/')
 });
