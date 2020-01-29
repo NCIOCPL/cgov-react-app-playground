@@ -33,10 +33,14 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "npm run unit-tests && npm run cy:ci",
+    "posttest": "npm run report:combined",
     "test:it": "cypress open",
     "cy:ci": "start-server-and-test start http://localhost:3000 integration-tests",
-    "unit-tests": "jest --collectCoverage",
-    "integration-tests": "cypress run"
+    "unit-tests": "jest",
+    "integration-tests": "cypress run",
+    "prereport:combined": "cp coverage/cypress/coverage-final.json coverage/from-cypress.json && cp coverage/jest/coverage-final.json coverage/from-jest.json",
+    "report:combined": "nyc merge coverage && mv coverage.json .nyc_output/out.json",
+    "postreport:combined": "nyc report --reporter lcov --report-dir coverage"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -59,10 +63,21 @@
     "roots": [
       "<rootDir>/src"
     ],
+    "collectCoverage": true,
+    "coverageDirectory": "coverage/jest",
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
-      "!src/**/*.d.ts"
+      "src/**/*.test.{js,jsx,ts,tsx}",
+      "!src/**/*.d.ts",
+      "!cypress/**/*.{spec,test}.{js,jsx,ts,tsx}"
     ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 30,
+        "functions": 30,
+        "lines": 30,
+        "statements": -10
+      }
+    },
     "setupFiles": [
       "react-app-polyfill/jsdom"
     ],
@@ -71,7 +86,7 @@
     ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
-      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+      "<rootDir>/src/**/*.test.{js,jsx,ts,tsx}"
     ],
     "testEnvironment": "jest-environment-jsdom-fourteen",
     "transform": {
@@ -108,13 +123,18 @@
   "babel": {
     "presets": [
       "react-app"
-    ]
+    ],
+    "plugins": ["istanbul"]
   },
   "cypress-cucumber-preprocessor": {
     "nonGlobalStepDefinitions": true
   },
+    "nyc": {
+      "report-dir": "coverage/cypress"
+    },
   "devDependencies": {
     "@babel/core": "7.7.4",
+    "@cypress/code-coverage": "^1.11.0",
     "@svgr/webpack": "4.3.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -124,6 +144,7 @@
     "babel-eslint": "10.0.3",
     "babel-jest": "^24.9.0",
     "babel-loader": "8.0.6",
+    "babel-plugin-istanbul": "^6.0.0",
     "babel-plugin-named-asset-import": "^0.3.5",
     "babel-preset-react-app": "^9.1.0",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
@@ -141,6 +162,7 @@
     "file-loader": "4.3.0",
     "html-webpack-plugin": "4.0.0-beta.5",
     "identity-obj-proxy": "3.0.0",
+    "istanbul-lib-coverage": "^3.0.0",
     "jest": "24.9.0",
     "jest-environment-jsdom-fourteen": "0.1.0",
     "jest-resolve": "24.9.0",
@@ -148,6 +170,7 @@
     "mini-css-extract-plugin": "0.8.0",
     "nock": "^11.7.2",
     "node-sass": "^4.13.1",
+    "nyc": "^15.0.0",
     "optimize-css-assets-webpack-plugin": "5.0.3",
     "pnp-webpack-plugin": "1.5.0",
     "postcss-flexbugs-fixes": "4.1.0",
