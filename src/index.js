@@ -5,13 +5,16 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { StateProvider } from "./store/store";
+import { reducer } from './store/reducer';
 import { AnalyticsProvider } from "./tracking";
+import { getBasePath } from './utilities/url';
 
 const initialize = ({
   appId = "@@/DEFAULT_DICTIONARY",
   analyticsHandler = data => {},
+  basePath = getBasePath(),
   dictionaryEndpoint = "",
-  dictionaryName = "Dictionary",
+  dictionaryTitle = "Dictionary",
   dictionaryIntroText = "",
   language = "en", // en|es (English|Spanish)
   rootId = "NCI-app-root"
@@ -22,27 +25,11 @@ const initialize = ({
   //populate global state with init params
   const initialState = {
     appId,
+    basePath,
     dictionaryEndpoint,
-    dictionaryName,
+    dictionaryTitle,
     dictionaryIntroText,
     language
-  };
-
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case "LOAD_GLOBAL":
-        return {
-          ...state,
-          [action.payload.field]: action.payload.value
-        };
-      case "LOAD_GLOBALS":
-        return {
-          ...state,
-          ...action.payload
-        };
-      default:
-        return state;
-    }
   };
 
   if (isRehydrating) {
@@ -71,7 +58,7 @@ const initialize = ({
 if (process.env.NODE_ENV !== "production") {
   initialize({
     analyticsHandler: (data) => { console.log(data); },
-    dictionaryName: 'NCI Dictionary of Cancer Terms',
+    dictionaryTitle: 'NCI Dictionary of Cancer Terms',
     dictionaryIntroText: 'Intro Text Here'
   });
 }

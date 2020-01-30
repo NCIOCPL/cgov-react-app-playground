@@ -1,6 +1,5 @@
 import { Router } from '@reach/router';
 import React, { useEffect } from "react";
-import { useStateValue } from "./store/store";
 import track from "react-tracking";
 
 import "./styles/dictionaries.scss";
@@ -10,18 +9,16 @@ import DisplayGlossary from './views/DisplayGlossary';
 import SearchGlossary from './views/SearchGlossary';
 
 const App = ({ tracking }) => {
-  // this should be a DUMB component that just displays our display(group) components
-  const [{ dictionaryName }] = useStateValue();
-
-  //example tracking setup for pageload
+  // example tracking setup for pageload
   useEffect(() => {
     tracking.trackEvent({action: 'pageLoad'})
   }, [tracking]);
 
   return (
-      <Router basepath={`/`}>
-        <DisplayGlossary path={paths.HOME} dictionaryName={dictionaryName} />
-        <SearchGlossary path={paths.SEARCH} dictionaryName={dictionaryName} />
+      <Router basepath="/">
+        <DisplayGlossary path={paths.HOME} />
+        <SearchGlossary path={paths.SEARCH} />
+        <DisplayGlossary path="/" />
       </Router>
   );
 };
