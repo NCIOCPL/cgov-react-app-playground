@@ -72,7 +72,7 @@ if (process.env.NODE_ENV !== "production") {
   initialize({
     analyticsHandler: (data) => { console.log(data); },
     dictionaryName: 'NCI Dictionary of Cancer Terms',
-    dictionaryIntroText: ''
+    dictionaryIntroText: 'Intro Text Here'
   });
 }
 
