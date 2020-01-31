@@ -54,7 +54,7 @@ jobs:
       ## deployment
       - name: Create Build Information
         env:
-          BUILD_INFO: ${{ steps.set_vars.outputs }}
+          BUILD_INFO: ${{ toJson(steps.set_vars.outputs) }}
         run: |
           echo $BUILD_INFO
           echo $BUILD_INFO > ./build/build-info.json
