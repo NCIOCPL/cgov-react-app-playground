@@ -82,7 +82,7 @@ jobs:
       - name: Download built app
         uses: actions/download-artifact@master
         with:
-          name: download-artifact
+          name: build-artifact
       - name: List File
         run: |
           ls -l
