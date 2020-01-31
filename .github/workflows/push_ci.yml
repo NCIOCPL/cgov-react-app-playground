@@ -1,11 +1,5 @@
 name: CI for Push Events
 on: push
-  ## This tries to avoid unessesary pushes to forked repo
-  ## development branches. No sense in a dev building every
-  ## time they push for a PR and no one should be working on
-  ## common branches in their fork.
-  push:
-
 jobs:
   build:
     runs-on: ubuntu-latest
