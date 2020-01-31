@@ -74,7 +74,7 @@ jobs:
   deploy-test:
     name: Deploy built artifacts to test server
     ## Only do this if the repo is NCIOCPL
-    if: startsWith(github.repository, "NCIOCPL")    
+    if: startsWith(github.repository, 'NCIOCPL')    
     ## This job depends on build completing
     needs: build
     runs-on: ubuntu-latest
