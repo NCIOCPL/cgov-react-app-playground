@@ -42,7 +42,11 @@ jobs:
       ## Build the app in prep for publishing
       - name: Build App
         run: npm run build
+        env:
+          CI: true
       ## Runs jest unit and cypress e2e testing and merges coverage reports
       - name: Run Tests 
         run: npm test
+        env:
+          CI: true
       
