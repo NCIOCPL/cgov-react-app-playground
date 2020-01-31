@@ -85,4 +85,4 @@ jobs:
           name: build-artifact
       - name: List File
         run: |
-          ls -l
+          ls -l build-artifact
