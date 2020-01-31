@@ -1,5 +1,5 @@
 name: CI for Push Events
-on: [ 'push' ]
+on: push
   ## This tries to avoid unessesary pushes to forked repo
   ## development branches. No sense in a dev building every
   ## time they push for a PR and no one should be working on
