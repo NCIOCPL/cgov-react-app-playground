@@ -83,6 +83,9 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: build-artifact
-      - name: List File
+      - name: Setup Job env
         run: |
-          ls -l build-artifact
+          echo ::set=env name=REPO_NAME::$(echo jq -r '.repo_name' < ./build_artifact/build-info.json)
+      - name: Test
+        run: |
+          echo $REPO_NAME
