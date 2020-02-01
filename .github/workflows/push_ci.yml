@@ -89,9 +89,23 @@ jobs:
           ls -l ./build-artifact
       - name: Setup Job env
         run: |
+          ## Set Vars
+          BUILD_NAME=$(jq -r '.build_name' < ./build-artifact/build-info.json)
+          BRANCH_NAME=$(jq -r '.branch_name' < ./build-artifact/build-info.json)
+          COMMIT_HASH=$(jq -r '.commit_hash' < ./build-artifact/build-info.json)
+          REPO_OWNER=$(jq -r '.repo_owner' < ./build-artifact/build-info.json)
           REPO_NAME=$(jq -r '.repo_name' < ./build-artifact/build-info.json)
-          echo ::set-env name=REPO_NAME::$(echo $REPO_NAME)
-          
+
+          ## Set Action Env
+          echo ::set-env name=BUILD_NAME::$(echo $BUILD_NAME)
+          echo ::set-env name=BRANCH_NAME::$(echo $BRANCH_NAME)
+          echo ::set-env name=COMMIT_HASH::$(echo $COMMIT_HASH)
+          echo ::set-env name=REPO_OWNER::$(echo $REPO_OWNER)
+          echo ::set-env name=REPO_NAME::$(echo $REPO_NAME)          
       - name: Test
         run: |
+          echo $BUILD_NAME
+          echo $BRANCH_NAME
+          echo $COMMIT_HASH        
+          echo $REPO_OWNER
           echo $REPO_NAME
