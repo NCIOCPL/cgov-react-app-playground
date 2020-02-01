@@ -5,28 +5,19 @@ jobs:
     name: Build, Test and Upload Artifacts
     runs-on: ubuntu-latest    
     steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: |
-          echo "$GITHUB_CONTEXT"
-          echo "-----"
-          echo "$GITHUB_REF"
-          echo "-----"
-          echo "$GITHUB_SHA"
       ## Setup variables for build info
       - name: Set Variables
         id: set_vars
         run: |
           ## PUSH
           if [ "${{ github.event_name }}" == "push" ]; then
-            BUILD_NAME=$(sed -E 's/refs\/(heads|tags)\///; s/\//_/g;' <<< $GITHUB_REF)
+            BUILD_NAME=$(sed -E 's/refs\/(heads|tags)\///; s/\//__/g;' <<< $GITHUB_REF)
             BRANCH_NAME=$(sed -E 's/refs\/(heads|tags)\///;' <<< $GITHUB_REF)
             COMMIT_HASH=$(echo "${GITHUB_SHA}")
           ## PULL_REQUEST
           elif [ "${{ github.event_name }}" == "pull_request" ]; then
-            BUILD_NAME=$(echo "pr_${{ github.event.pull_request.number }}")
-            BRANCH_NAME=$(echo "pr_${{ github.event.pull_request.number }}")
+            BUILD_NAME=$(echo "pr-${{ github.event.pull_request.number }}")
+            BRANCH_NAME=$(echo "pr-${{ github.event.pull_request.number }}")
             COMMIT_HASH=$(echo "${{ github.event.pull_request.head.sha }}")
           else
             ## ERROR
