@@ -5,6 +5,15 @@ jobs:
     name: Build, Test and Upload Artifacts
     runs-on: ubuntu-latest    
     steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "$GITHUB_CONTEXT"
+          echo "-----"
+          echo "$GITHUB_REF"
+          echo "-----"
+          echo "$GITHUB_SHA"
       ## Setup variables for build info
       - name: Set Variables
         id: set_vars
