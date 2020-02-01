@@ -1,5 +1,5 @@
 name: CI for Push Events
-on: [ push ]
+on: [ push, pull_request ]
 jobs:      
   build:
     name: Build, Test and Upload Artifacts
