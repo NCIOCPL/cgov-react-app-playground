@@ -23,27 +23,25 @@ jobs:
             BUILD_NAME=$(sed -E 's/refs\/(heads|tags)\///; s/\//_/g;' <<< $GITHUB_REF)
             BRANCH_NAME=$(sed -E 's/refs\/(heads|tags)\///;' <<< $GITHUB_REF)
             COMMIT_HASH=$(echo "${GITHUB_SHA}")
-            ## For step checks and artifact deployment path.
-            export REPO_FULL=${{ github.repository }}
-            export REPO_RE='([^/]+)/(.*)'
-            [[ "$REPO_FULL" =~ $REPO_RE ]]
-            REPO_OWNER=$(echo "${BASH_REMATCH[1]}")
-            REPO_NAME=$(echo "${BASH_REMATCH[2]}")
           ## PULL_REQUEST
           elif [ "${{ github.event_name }}" == "pull_request" ]; then
-            BUILD_NAME=$(sed -E 's/refs\/(heads|tags)\///; s/\//_/g;' <<< $GITHUB_REF)
-            BRANCH_NAME=$(sed -E 's/refs\/(heads|tags)\///;' <<< $GITHUB_REF)
-            COMMIT_HASH=$(echo "${GITHUB_SHA}")
-            ## For step checks and artifact deployment path.
-            export REPO_FULL=${{ github.repository }}
-            export REPO_RE='([^/]+)/(.*)'
-            [[ "$REPO_FULL" =~ $REPO_RE ]]
-            REPO_OWNER=$(echo "${BASH_REMATCH[1]}")
-            REPO_NAME=$(echo "${BASH_REMATCH[2]}")
+            BUILD_NAME=$(echo "pr_${{ github.event.pull_request.number }}")
+            BRANCH_NAME=$(echo "pr_${{ github.event.pull_request.number }}")
+            COMMIT_HASH=$(echo "${{ github.event.pull_request.head.sha }}")
           else
             ## ERROR
             exit 1
           fi
+
+          ## For step checks and artifact deployment path.
+          ## Same for push and PR
+          export REPO_FULL=${{ github.repository }}
+          export REPO_RE='([^/]+)/(.*)'
+          [[ "$REPO_FULL" =~ $REPO_RE ]]
+          REPO_OWNER=$(echo "${BASH_REMATCH[1]}")
+          REPO_NAME=$(echo "${BASH_REMATCH[2]}")
+
+          ## Set step outputs for later use
           echo ::set-output name=build_name::${BUILD_NAME}
           echo ::set-output name=branch_name::${BRANCH_NAME}
           echo ::set-output name=commit_hash::${COMMIT_HASH}
