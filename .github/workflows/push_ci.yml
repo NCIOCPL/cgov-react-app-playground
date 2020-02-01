@@ -89,8 +89,8 @@ jobs:
           ls -l ./build-artifact
       - name: Setup Job env
         run: |
-          jq -r '.' < ./build-artifact/build-info.json
-          REPO_NAME::$(echo jq -r '.repo_name' < ./build-artifact/build-info.json)
+          jq -r '.repo_name' < ./build-artifact/build-info.json
+          REPO_NAME=$(echo jq -r '.repo_name' < ./build-artifact/build-info.json)
           echo ::set=env name=$(echo $REPO_NAME)
           
       - name: Test
