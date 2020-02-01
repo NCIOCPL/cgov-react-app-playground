@@ -33,7 +33,7 @@ jobs:
             REPO_NAME=$(echo "${BASH_REMATCH[2]}")
           else
             ## ERROR
-            exit(1)
+            exit 1
           fi
           echo ::set-output name=build_name::${BUILD_NAME}
           echo ::set-output name=branch_name::${BRANCH_NAME}
