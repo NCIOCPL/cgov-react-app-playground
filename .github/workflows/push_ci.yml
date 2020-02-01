@@ -83,10 +83,7 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: build-artifact
-      - name: List dir
-        run: |
-          ls -l
-          ls -l ./build-artifact
+      ## Setup vars from Build Info from build job
       - name: Setup Job env
         run: |
           ## Set Vars
@@ -101,11 +98,20 @@ jobs:
           echo ::set-env name=BRANCH_NAME::$(echo $BRANCH_NAME)
           echo ::set-env name=COMMIT_HASH::$(echo $COMMIT_HASH)
           echo ::set-env name=REPO_OWNER::$(echo $REPO_OWNER)
-          echo ::set-env name=REPO_NAME::$(echo $REPO_NAME)          
-      - name: Test
+          echo ::set-env name=REPO_NAME::$(echo $REPO_NAME)
+      - name: Test Vars
         run: |
           echo $BUILD_NAME
           echo $BRANCH_NAME
           echo $COMMIT_HASH        
           echo $REPO_OWNER
           echo $REPO_NAME
+      ## We need to create the zip for netstorage          
+      - name: Zip Build Artifact
+        run: |
+          pushd build-artifact
+          zip -r ../${BUILD_NAME}.zip *
+          popd
+      - name: Test Dir
+        run: |
+          ls -l
