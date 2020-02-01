@@ -90,7 +90,7 @@ jobs:
       - name: Setup Job env
         run: |
           REPO_NAME=$(jq -r '.repo_name' < ./build-artifact/build-info.json)
-          echo ::set-env name=$(echo $REPO_NAME)
+          echo ::set-env name=REPO_NAME::$(echo $REPO_NAME)
           
       - name: Test
         run: |
