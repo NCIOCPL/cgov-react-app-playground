@@ -9,6 +9,7 @@ describe("App component", () => {
   useStateValue.mockReturnValue([
     {
       appId: "mockAppId",
+      basePath: "/",
       dictionaryName: "NCI Dictionary of Cancer Terms"
     }
   ]);
