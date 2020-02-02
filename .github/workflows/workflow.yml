@@ -164,6 +164,8 @@ jobs:
           ns = Netstorage(NS_HOSTNAME, NS_KEYNAME, NS_KEY, True)
           ok, response = ns.upload(local_source, netstorage_destination, True)
 
+          ## TODO: Clear cache
+
           if not ok:
             # Error occurred
             print(response)
@@ -171,4 +173,7 @@ jobs:
           else: 
             print("Uploaded {0} successfully".format(artifact_filename))
             exit(0)
-
+      - name: Announce Build has been Deployed
+        if: github.event_name == 'pull_request'
+        run: |
+            echo "PR ONLY"
