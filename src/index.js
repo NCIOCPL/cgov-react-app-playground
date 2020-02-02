@@ -9,6 +9,7 @@ import { AnalyticsProvider } from "./tracking";
 
 const initialize = ({
   appId = "@@/DEFAULT_DICTIONARY",
+  baseUrl = '/',
   analyticsHandler = data => {},
   dictionaryEndpoint = "",
   dictionaryName = "Dictionary",
@@ -22,6 +23,7 @@ const initialize = ({
   //populate global state with init params
   const initialState = {
     appId,
+    baseUrl,
     dictionaryEndpoint,
     dictionaryName,
     dictionaryIntroText,
@@ -49,7 +51,7 @@ const initialize = ({
     ReactDOM.hydrate(
       <StateProvider initialState={initialState} reducer={reducer}>
         <AnalyticsProvider analyticsHandler={analyticsHandler}>
-          <App />
+          <App baseUrl={baseUrl} />
         </AnalyticsProvider>
       </StateProvider>,
       appRootDOMNode
@@ -58,13 +60,22 @@ const initialize = ({
     ReactDOM.render(
       <StateProvider initialState={initialState} reducer={reducer} >
         <AnalyticsProvider analyticsHandler={analyticsHandler}>
-          <App />
+          <App baseUrl={baseUrl} />
         </AnalyticsProvider>
       </StateProvider>,
       appRootDOMNode
     );
   }
   return appRootDOMNode;
+};
+
+const getProductionTestBase = () => {
+  const url = window.location.pathname;
+  const components = url.split('/');
+  if (components.length < 2) {
+    throw Error("Path does not match expectations");
+  }
+  return '/' + ([components[0], components[1]].join('/'));
 };
 
 // The following lets us run the app in dev not in situ as would normally be the case.
@@ -77,7 +88,7 @@ if (process.env.NODE_ENV !== "production") {
 } else if (window?.location?.host === 'react-app-dev.cancer.gov') {
   // This is for product testing
   initialize({
-    // Should set base url
+    baseUrl: getProductionTestBase(),
     analyticsHandler: (data) => { console.log(data); },
     dictionaryName: 'NCI Dictionary of Cancer Terms',
     dictionaryIntroText: 'Intro Text Here'
