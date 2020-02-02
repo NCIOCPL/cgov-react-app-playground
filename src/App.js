@@ -9,9 +9,9 @@ import { paths } from './constants';
 import DisplayGlossary from './views/DisplayGlossary';
 import SearchGlossary from './views/SearchGlossary';
 
-const App = ({ tracking }) => {
+const App = ({ tracking, baseUrl }) => {
   // this should be a DUMB component that just displays our display(group) components
-  const [{ dictionaryName }] = useStateValue();
+  const [{ basePath, dictionaryName }] = useStateValue();
 
   //example tracking setup for pageload
   useEffect(() => {
@@ -19,7 +19,7 @@ const App = ({ tracking }) => {
   }, [tracking]);
 
   return (
-      <Router basepath={`/`}>
+      <Router basepath={ basePath }>
         <DisplayGlossary path={paths.HOME} dictionaryName={dictionaryName} />
         <SearchGlossary path={paths.SEARCH} dictionaryName={dictionaryName} />
       </Router>

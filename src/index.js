@@ -9,7 +9,7 @@ import { AnalyticsProvider } from "./tracking";
 
 const initialize = ({
   appId = "@@/DEFAULT_DICTIONARY",
-  baseUrl = '/',
+  basePath = '/',
   analyticsHandler = data => {},
   dictionaryEndpoint = "",
   dictionaryName = "Dictionary",
@@ -23,7 +23,7 @@ const initialize = ({
   //populate global state with init params
   const initialState = {
     appId,
-    baseUrl,
+    basePath,
     dictionaryEndpoint,
     dictionaryName,
     dictionaryIntroText,
@@ -51,7 +51,7 @@ const initialize = ({
     ReactDOM.hydrate(
       <StateProvider initialState={initialState} reducer={reducer}>
         <AnalyticsProvider analyticsHandler={analyticsHandler}>
-          <App baseUrl={baseUrl} />
+          <App />
         </AnalyticsProvider>
       </StateProvider>,
       appRootDOMNode
@@ -60,7 +60,7 @@ const initialize = ({
     ReactDOM.render(
       <StateProvider initialState={initialState} reducer={reducer} >
         <AnalyticsProvider analyticsHandler={analyticsHandler}>
-          <App baseUrl={baseUrl} />
+          <App />
         </AnalyticsProvider>
       </StateProvider>,
       appRootDOMNode
@@ -88,7 +88,7 @@ if (process.env.NODE_ENV !== "production") {
 } else if (window?.location?.host === 'react-app-dev.cancer.gov') {
   // This is for product testing
   initialize({
-    baseUrl: getProductionTestBase(),
+    basePath: getProductionTestBase(),
     analyticsHandler: (data) => { console.log(data); },
     dictionaryName: 'NCI Dictionary of Cancer Terms',
     dictionaryIntroText: 'Intro Text Here'
