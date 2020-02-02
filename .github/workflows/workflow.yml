@@ -158,6 +158,14 @@ jobs:
           netstorage_destination = '/{0}/{1}/{2}'.format(NS_CPCODE, REPO_NAME, artifact_filename)
           
           print(local_source)
-          print(os.path.exists(local_source))
-          print(netstorage_destination)
-          # Rest goes here
+          ns = Netstorage(NS_HOSTNAME, NS_KEYNAME, NS_KEY, True)
+          ok, response = ns.upload(local_source, netstorage_destination, True)
+
+          if not ok:
+            # Error occurred
+            print(response)
+            exit(1)
+          else: 
+            print("Uploaded {0} successfully".format(artifact_filename))
+            exit(0)
+
