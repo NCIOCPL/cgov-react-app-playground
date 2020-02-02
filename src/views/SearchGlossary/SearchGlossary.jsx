@@ -1,8 +1,6 @@
 import { Link } from "@reach/router";
 import React from 'react';
 
-import { paths } from "../../constants";
-
 const SearchGlossary = ({dictionaryName}) => {
   return (
     <div data-testid="search-glossary">
