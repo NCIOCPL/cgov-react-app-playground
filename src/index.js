@@ -75,7 +75,7 @@ const getProductionTestBase = () => {
   if (components.length < 2) {
     throw Error("Path does not match expectations");
   }
-  return '/' + ([components[0], components[1]].join('/'));
+  return components.slice(0,3).join('/');
 };
 
 // The following lets us run the app in dev not in situ as would normally be the case.
