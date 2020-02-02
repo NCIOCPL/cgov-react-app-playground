@@ -74,6 +74,14 @@ if (process.env.NODE_ENV !== "production") {
     dictionaryName: 'NCI Dictionary of Cancer Terms',
     dictionaryIntroText: 'Intro Text Here'
   });
+} else if (window?.location?.host === 'react-app-dev.cancer.gov') {
+  // This is for product testing
+  initialize({
+    // Should set base url
+    analyticsHandler: (data) => { console.log(data); },
+    dictionaryName: 'NCI Dictionary of Cancer Terms',
+    dictionaryIntroText: 'Intro Text Here'
+  });
 }
 
 export default initialize;
