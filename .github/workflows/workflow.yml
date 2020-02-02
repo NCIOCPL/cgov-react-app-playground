@@ -136,6 +136,10 @@ jobs:
         shell: bash
         run: |
           pip install -Iv netstorageapi==1.2.12
+      - name: Teapot test
+        shell: bash
+        run: |
+          echo "I'm a little teapot"
       ## Actually do the upload
       - name: Upload artifact to netstorage
         shell: python
