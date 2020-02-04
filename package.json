@@ -124,14 +124,16 @@
     "presets": [
       "react-app"
     ],
-    "plugins": ["istanbul"]
+    "plugins": [
+      "istanbul"
+    ]
   },
   "cypress-cucumber-preprocessor": {
     "nonGlobalStepDefinitions": true
   },
-    "nyc": {
-      "report-dir": "coverage/cypress"
-    },
+  "nyc": {
+    "report-dir": "coverage/cypress"
+  },
   "devDependencies": {
     "@babel/core": "7.7.4",
     "@cypress/code-coverage": "^1.11.0",
