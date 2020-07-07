@@ -12,6 +12,7 @@
 !.editorconfig
 !.eslintignore
 !.eslintrc.js
+!.prettierrc
 !.flake8
 !.gitattributes
 !.github
@@ -22,6 +23,7 @@
 !.travis.yml
 !.eslintrc.yaml
 !.cpplint
+!.npmrc
 
 # === Rules for root dir ===
 /core
@@ -108,6 +110,8 @@ _UpgradeReport_Files/
 /*.xml
 /node_trace.*.log
 /cypress/video
+/cypress/screenshots
+/cypress/fixtures/example.json
 # coverage related
 /gcovr
 /build
@@ -139,3 +143,4 @@ _UpgradeReport_Files/
 __pycache__
 .DS_Store
 *~
+/.idea
