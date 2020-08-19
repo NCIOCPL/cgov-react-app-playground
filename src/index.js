@@ -12,7 +12,7 @@ import * as serviceWorker from './serviceWorker';
 import { getProductTestBase } from './utils';
 import { ClientContextProvider } from 'react-fetching-library';
 import { getAxiosClient } from './services/api/axios-client';
-import ErrorBoundary from './views/ErrorBoundary';
+import { ErrorBoundary } from './views';
 
 /**
  * Initializes the Glossary App.

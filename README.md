@@ -15,6 +15,7 @@ You must create you ticket branches off the NCIOCPL repo such that secrets are u
    * `public/index.html` - Update the `const cfgs = [...]` block to set the initialize options for the apps. Modify `<select id="jm1" class="jumpmenu">` to set the dropdown name for the configuration.
 	 * Modify `package.json` to set the `name`, `version`, `repository.url`, `bugs.url` to this repos values.
 	   * Run `` to update the lock.
+	 * modify the `appPaths` constant in `src/hooks/routing` to setup all the routes for your app. See [Routing](#routing).
 1. Go to the NCIOCPL Organization Secrets and add permissions to the  new repository for these secrets:
    * ...
 
@@ -48,6 +49,8 @@ You must create you ticket branches off the NCIOCPL repo such that secrets are u
     * `index.js` - the initialization function that creates the app state. This is the entry point to the app.
     * `App.js` - The main wrapper for the application
     * `constants.js` - please add any constants your app will use to this file
+		* `hooks` - the location where all hooks should go
+		  * `routing.js` - this hook contains the methods for generating urls for the app.
 	* `support` - this contains the code for mocking APIs, as well as the mock data
 	  * `mock-data` - This the folder structure under here should match the paths for `setupProxy.js`.
 	  * `src/setupProxy.js` - This is the place where you will mock all the API calls.
@@ -58,3 +61,66 @@ You must create you ticket branches off the NCIOCPL repo such that secrets are u
 	* `jest-test-setup` - ??
 	* `package.json` and `package-lock.json` - you should know what these are.
 	* `README.md` - this document
+
+## Routing
+`src/routing.js` contains a hook, useAppPaths that return helper functions that are used to not only generate URLs for a route, but also can be used to define the routes in your App.js file.
+
+### Using useAppPaths to generate a URL
+`useAppPaths` will return an object with all the route names, as functions, defined in appPaths. The functions each take in an object that maps to the path patterns.
+
+**Example**
+```
+// in routing.js
+const appPaths = {
+	HomePath: '/',
+	ItemDetailsPath: '/:id',
+};
+
+// snippet from Home.jsx
+import { useAppPaths } from './hooks';
+
+...snip...
+
+const {
+	HomePath,
+	ItemDetailsPath,
+} = useAppPaths();
+
+...snip...
+
+<Link
+		to={ItemDetailsPath({id: "6789"})}
+		onClick={handleItemClick}>Item 6789</Link>
+```
+
+### Using useAppPaths to get a route
+If you do not pass any parameters into the `useAppPaths` functions, then the original path pattern will be returned. This is used for defining routes.
+
+**Example**
+```
+// in routing.js
+const appPaths = {
+	HomePath: '/',
+	ItemDetailsPath: '/:id',
+};
+
+// Route definition from App.js
+import { useAppPaths } from './hooks';
+
+...snip...
+
+const {
+	HomePath,
+	ItemDetailsPath,
+} = useAppPaths();
+
+...snip...
+
+<Router>
+	<Routes>
+		<Route path={HomePath()} element={<Home />} />
+		<Route path={ItemDetailsPath()} element={<ItemDetails />} />
+		<Route path="/*" element={<PageNotFound />} />
+	</Routes>
+</Router>
+```
