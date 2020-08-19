@@ -44,7 +44,10 @@ You must create you ticket branches off the NCIOCPL repo such that secrets are u
     * `build.js` -
     * `start.js` -
     * `test.js` -
-  * `src`
+  * `src` - the source
+    * `index.js` - the initialization function that creates the app state. This is the entry point to the app.
+    * `App.js` - The main wrapper for the application
+    * `constants.js` - please add any constants your app will use to this file
 	* `support` - this contains the code for mocking APIs, as well as the mock data
 	  * `mock-data` - This the folder structure under here should match the paths for `setupProxy.js`.
 	  * `src/setupProxy.js` - This is the place where you will mock all the API calls.
