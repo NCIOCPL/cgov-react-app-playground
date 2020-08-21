@@ -1,15 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
+import { Spinner } from '../../components';
 import { useCustomQuery } from '../../hooks';
+import { getSampleCallResults } from '../../services/api/actions';
 import { getKeyValueFromQueryString } from '../../utils';
 
 const ItemDetails = () => {
-
 	const { id } = useParams();
+	const [doneLoading, setDoneLoading] = useState(false);
+	const [stateSampleCallResults, setStateSampleCallResults] = useState();
+	// Sample fetch results for the item
+	const sampleCallResults = useCustomQuery(getSampleCallResults({ id }));
 
-	// TODO: Make fetcher for the item
 	// TODO: Metadata
+	useEffect(() => {
+		// Set results returned from fetch in state once fetch is done
+		// and fetch payload is defined
+		if (!sampleCallResults.loading && sampleCallResults.payload) {
+			setStateSampleCallResults(sampleCallResults.payload);
+			setDoneLoading(true);
+		}
+	}, [sampleCallResults.loading, sampleCallResults.payload]);
 
 	const renderHelmet = () => {
 		let retHead = <></>;
@@ -19,9 +31,11 @@ const ItemDetails = () => {
 	return (
 		<>
 			{renderHelmet()}
-			<div>
-				THE ITEM CONTENTS WOULD GO HERE. OR 404.
-			</div>
+			{doneLoading && (
+				<div>THE ITEM CONTENTS WOULD GO HERE. OR 404.</div>
+
+			)}
+			{!doneLoading && <Spinner />}
 		</>
 	);
 };

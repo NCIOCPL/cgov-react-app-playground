@@ -3,10 +3,8 @@ import { createClient } from 'react-fetching-library';
 
 import { buildAxiosRequest } from './buildAxiosRequest';
 import {
-	setBestBetsEndpoint,
-	setDictionaryEndpoint,
+	setAPIEndpoint,
 	setLanguage,
-	setSearchEndpoint,
 } from './endpoints';
 
 const axiosInstance = axios.create({
@@ -15,16 +13,12 @@ const axiosInstance = axios.create({
 
 export const getAxiosClient = (initialize) => {
 	const {
-		bestbetsEndpoint,
-		dictionaryEndpoint,
+		apiEndpoint,
 		language,
-		searchEndpoint,
 	} = initialize;
 
-	setBestBetsEndpoint(bestbetsEndpoint);
-	setDictionaryEndpoint(dictionaryEndpoint);
+	setAPIEndpoint(apiEndpoint);
 	setLanguage(language);
-	setSearchEndpoint(searchEndpoint);
 
 	return createClient({
 		fetch: buildAxiosRequest(axiosInstance),

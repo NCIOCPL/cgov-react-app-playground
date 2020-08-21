@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { AudioPlayer } from '../../';
-import { testIds } from '../../../constants';
 
 const Pronunciation = ({ pronunciationObj, language = 'en' }) => {
 	return (
@@ -15,7 +14,7 @@ const Pronunciation = ({ pronunciationObj, language = 'en' }) => {
 			{pronunciationObj.key && (
 				<div
 					className="pronunciation__key"
-					data-testid={testIds.TERM_DEF_PRONUNCIATION}>
+					data-testid="tid-term-def-pronunciation">
 					{pronunciationObj.key}
 				</div>
 			)}

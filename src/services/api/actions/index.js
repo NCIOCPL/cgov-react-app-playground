@@ -1,1 +1,1 @@
-export { getSearchResults } from './getSearchResults';
+export { getSampleCallResults } from './getSampleCallResults';

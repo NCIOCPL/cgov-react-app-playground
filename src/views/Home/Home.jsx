@@ -133,7 +133,7 @@ const Home = () => {
 				<p>It can be whatever you like, you don&apos;t even actually need a home view,
 					but most of our apps have something. Please do not overload the home view
 					with a bunch of other views.</p>
-				<h3>2 examples of links</h3>
+				<h3>3 examples of links</h3>
 				<ul>
 					<li>
 						<Link
@@ -148,7 +148,12 @@ const Home = () => {
 					<li>
 						<Link
 								to={ItemDetailsPath({id: "99999"})}
-								onClick={handleItemClick}>Non-existant Item</Link>
+								onClick={handleItemClick}>Non-existent Item</Link>
+					</li>
+					<li>
+						<Link
+							to="/chicken"
+							onClick={handleItemClick}>Non-existent Page</Link>
 					</li>
 				</ul>
 			</div>

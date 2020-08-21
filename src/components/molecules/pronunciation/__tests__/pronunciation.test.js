@@ -29,8 +29,8 @@ describe('<Pronunciation /> component', () => {
 		const { getByTestId } = render(
 			<Pronunciation pronunciationObj={payload} language="en" />
 		);
-		expect(getByTestId(testIds.TERM_DEF_PRONUNCIATION)).toBeInTheDocument();
-		expect(getByTestId(testIds.TERM_DEF_PRONUNCIATION)).toHaveTextContent(
+		expect(getByTestId("tid-term-def-pronunciation")).toBeInTheDocument();
+		expect(getByTestId("tid-term-def-pronunciation")).toHaveTextContent(
 			'(mock phonetic spelling)'
 		);
 	});

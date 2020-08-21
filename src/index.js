@@ -25,46 +25,32 @@ const initialize = ({
 	// this outside of the digital platform, and wants to hookup
 	// their own analytics. See index.html for an overly complicated
 	// configuration that handles logging to the console.
-	analyticsHandler = 'EddlAnalyticsHandler', // EDDLAnalyticsHandler(window, !!window.Cypress),
-	analyticsPublishedDate = 'unknown',
-	analyticsName = 'SitewideSearch',
-	apiBaseEndpoint = 'https://webapis.cancer.gov/',
-	appId = '@@/DEFAULT_SWS_APP_ID',
-	baseHost = 'http://localhost:3000',
-	basePath = '/',
-	bestbetsEndpoint = 'https://webapis.cancer.gov/bestbets/v1/',
-	bestbetsCollection = 'live',
-	canonicalHost = 'https://www.cancer.gov',
-	dictionaryEndpoint = 'https://webapis.cancer.gov/glossary/v1/',
-	dropdownOptions = [20, 50],
-	language = 'en', // en|es (English|Spanish)
-	rootId = 'NCI-app-root',
-	searchEndpoint = 'https://webapis.cancer.gov/sitewidesearch/v1/',
-	searchCollection = 'cgov',
-	searchSiteFilter = 'all',
-	siteName = 'National Cancer Institute',
-	title = 'NCI Search Results',
+	analyticsHandler = "EddlAnalyticsHandler",
+	analyticsPublishedDate = "unknown",
+	appId = "@@/DEFAULT_REACT_APP_ID",
+	baseHost = "http://localhost:3000",
+	basePath = "/",
+	apiEndpoint = "/api/sampleapi/v1/",
+	canonicalHost = "https://www.cancer.gov",
+	language = "en",
+	rootId = "NCI-app-root",
+	siteName = "National Cancer Institute",
+	title = "NCI Search Results",
 } = {}) => {
 	const appRootDOMNode = document.getElementById(rootId);
 	const isRehydrating = appRootDOMNode.getAttribute('data-isRehydrating');
 
 	//populate global state with init params
 	const initialState = {
-		apiBaseEndpoint,
+		apiEndpoint,
 		appId,
 		analyticsChannel,
 		analyticsPublishedDate,
-		analyticsName,
 		baseHost,
 		basePath,
-		bestbetsEndpoint,
 		canonicalHost,
-		dictionaryEndpoint,
-		dropdownOptions,
 		language,
-		searchEndpoint,
 		siteName,
-		searchSiteFilter,
 		title
 	};
 
@@ -79,8 +65,7 @@ const initialize = ({
 					pageLanguage={language === 'es' ? 'spanish' : 'english'}
 					pageChannel={analyticsChannel}
 					pageContentGroup={''}
-					publishedDate={analyticsPublishedDate}
-					analyticsName={analyticsName}>
+					publishedDate={analyticsPublishedDate}>
 					{children}
 				</EddlAnalyticsProvider>
 			)
