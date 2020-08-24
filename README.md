@@ -50,15 +50,17 @@ You must create you ticket branches off the NCIOCPL repo such that secrets are u
     * `App.js` - The main wrapper for the application
     * `constants.js` - please add any constants your app will use to this file
 		* `hooks` - the location where all hooks should go
+		  * `customFetch.js` - this hook acts as a wrapper for the external fetch library [react-fetching-library]()
 		  * `routing.js` - this hook contains the methods for generating urls for the app.
+	      * `useURLQuery.js` - this hook uses react-router-dom's useLocation hook in conjunction with URLSearchParams to provide the application with a consistent way to access url query strings
 	* `support` - this contains the code for mocking APIs, as well as the mock data
 	  * `mock-data` - This the folder structure under here should match the paths for `setupProxy.js`.
 	  * `src/setupProxy.js` - This is the place where you will mock all the API calls.
-	* `.editorconfig` - editorrc file to help ensure saved files are consisten with linter.
+	* `.editorconfig` - editorrc file to help ensure saved files are consistent with linter.
 	* `.eslintrc.js` - The linter config. These are based off of AirBnB react rules that @arcepaul modified.
 	* `.gitignore` - gitignore file based on CRA, with additions for our stack. (e.g. ignore cypress screenshots)
 	* `.prettierrc` - similar to editorconfig. help with linter rules.
-	* `jest-test-setup` - ??
+	* `jest-test-setup` - for jest configuration you want defined before running each test
 	* `package.json` and `package-lock.json` - you should know what these are.
 	* `README.md` - this document
 

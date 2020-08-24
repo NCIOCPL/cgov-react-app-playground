@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { Spinner } from '../../components';
 import { useCustomQuery } from '../../hooks';
 import { getSampleCallResults } from '../../services/api/actions';
-import { getKeyValueFromQueryString } from '../../utils';
 
 const ItemDetails = () => {
 	const { id } = useParams();
