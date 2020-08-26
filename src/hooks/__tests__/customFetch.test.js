@@ -5,7 +5,7 @@ import { ClientContextProvider } from 'react-fetching-library';
 import UseCustomQuerySample from '../samples/UseCustomQuery';
 import { useStateValue } from '../../store/store';
 import MockAnalyticsProvider from '../../tracking/mock-analytics-provider';
-import ErrorBoundary from '../../views/ErrorBoundary';
+import { ErrorBoundary } from '../../views/ErrorBoundary';
 
 jest.mock('../../store/store');
 

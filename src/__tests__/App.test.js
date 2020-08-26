@@ -35,11 +35,8 @@ describe('App component', () => {
 	afterEach(cleanup);
 
 	test('HomePath route exists and matches expected route', async () => {
-		const apiBaseEndpoint = 'http://localhost:3000/api';
+		const apiEndpoint = 'http://localhost:3000/api';
 		const basePath = '/';
-		const bestbetsEndpoint = `${apiBaseEndpoint}/bestbets/v1/`;
-		const	dictionaryEndpoint = `${apiBaseEndpoint}/glossary/v1/`;
-		const searchEndpoint = `${apiBaseEndpoint}/sitewidesearch/v1/`;
 		const language = 'en';
 		const siteName = 'National Cancer Institute';
 
@@ -47,21 +44,15 @@ describe('App component', () => {
 			{
 				appId: 'mockAppId',
 				basePath,
-				bestbetsEndpoint,
-				dictionaryEndpoint,
 				language,
-				searchEndpoint,
 				siteName,
 			},
 		]);
 
 		const { HomePath } = useAppPaths();
 		const initialState = {
-			apiBaseEndpoint,
-			bestbetsEndpoint,
-			dictionaryEndpoint,
+			apiEndpoint,
 			language,
-			searchEndpoint,
 			siteName,
 		};
 
