@@ -66,7 +66,7 @@ export const EDDLAnalyticsHandler = (window, isDebugging) => {
 						metaTitle,
 						language,
 						type: 'nciAppModulePage',
-						audience,
+						...(audience && {audience}),
 						channel,
 						contentGroup,
 						publishedDate,

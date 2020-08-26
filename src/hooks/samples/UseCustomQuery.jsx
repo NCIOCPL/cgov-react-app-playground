@@ -1,15 +1,15 @@
 import React from 'react';
 
 import { useCustomQuery } from '../customFetch';
-import { getSearchResults } from '../../services/api/actions';
-import { setLanguage, setSearchEndpoint } from '../../services/api/endpoints';
+import { getSampleCallResults } from '../../services/api/actions';
+import { setLanguage, setAPIEndpoint } from '../../services/api/endpoints';
 
-const UseCustomQuerySample = () => {
+const UseCustomQuerySample = (id) => {
 	const apiBaseEndpoint = 'http://localhost:3000/api';
 	const lang = 'en';
 	setLanguage(lang);
-	setSearchEndpoint(`${apiBaseEndpoint}/glossary/v1/search`);
-	const { loading, payload } = useCustomQuery(getSearchResults());
+	setAPIEndpoint(`${apiBaseEndpoint}/sampleapi/v1/sampleendpoint`);
+	const { loading, payload } = useCustomQuery(getSampleCallResults(id));
 	return <>{!loading && payload && <h1>{payload.contentMessage}</h1>}</>;
 };
 

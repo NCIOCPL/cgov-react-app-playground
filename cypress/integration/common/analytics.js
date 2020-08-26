@@ -138,7 +138,8 @@ Then(
 			const matchedEvents = getEventFromEDDL(win, dataObj.type, dataObj.event);
 			expect(matchedEvents).to.have.length(1);
 
-			const eventData = matchedEvents[0];
+      const eventData = matchedEvents[0];
+      console.log(eventData)
 
 			// This is a cheat. For the most part we know all the values so this
 			// is ok. We won't support regex matching this way.

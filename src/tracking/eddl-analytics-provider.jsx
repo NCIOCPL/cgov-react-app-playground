@@ -2,7 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import track, { useTracking } from 'react-tracking';
 
-import { AnalyticsProvider, EddlAnalyticsHandler } from './';
+import { AnalyticsProvider } from './';
+import {EDDLAnalyticsHandler} from '../utils/index'
+// import {EDDLAnalyticsHandler} from '../utils/index'
 import WrapperComponent from './wrapper-component';
 
 /**
@@ -17,7 +19,7 @@ import WrapperComponent from './wrapper-component';
  */
 const EddlAnalyticsProvider = ({
 	children,
-	analyticsHandler = EddlAnalyticsHandler(window),
+	analyticsHandler = EDDLAnalyticsHandler(window),
 	pageName,
 	pageTitle,
 	pageMetaTitle,

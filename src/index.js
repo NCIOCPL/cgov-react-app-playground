@@ -26,6 +26,7 @@ const initialize = ({
 	// their own analytics. See index.html for an overly complicated
 	// configuration that handles logging to the console.
 	analyticsHandler = "EddlAnalyticsHandler",
+	analyticsContentGroup = 'Global Search',
 	analyticsPublishedDate = "unknown",
 	appId = "@@/DEFAULT_REACT_APP_ID",
 	baseHost = "http://localhost:3000",
@@ -45,6 +46,7 @@ const initialize = ({
 		apiEndpoint,
 		appId,
 		analyticsChannel,
+		analyticsContentGroup,
 		analyticsPublishedDate,
 		baseHost,
 		basePath,
@@ -64,7 +66,7 @@ const initialize = ({
 				<EddlAnalyticsProvider
 					pageLanguage={language === 'es' ? 'spanish' : 'english'}
 					pageChannel={analyticsChannel}
-					pageContentGroup={''}
+					pageContentGroup={analyticsContentGroup}
 					publishedDate={analyticsPublishedDate}>
 					{children}
 				</EddlAnalyticsProvider>
