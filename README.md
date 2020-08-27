@@ -49,10 +49,16 @@ You must create you ticket branches off the NCIOCPL repo such that secrets are u
     * `index.js` - the initialization function that creates the app state. This is the entry point to the app.
     * `App.js` - The main wrapper for the application
     * `constants.js` - please add any constants your app will use to this file
-		* `hooks` - the location where all hooks should go
-		  * `customFetch.js` - this hook acts as a wrapper for the external fetch library [react-fetching-library]()
-		  * `routing.js` - this hook contains the methods for generating urls for the app.
-	      * `useURLQuery.js` - this hook uses react-router-dom's useLocation hook in conjunction with URLSearchParams to provide the application with a consistent way to access url query strings
+    * `hooks` - the location where all hooks should go
+      * `customFetch.js` - this hook acts as a wrapper for `useQuery` hook for the external fetch library [react-fetching-library](https://marcin-piela.github.io/react-fetching-library/#/?id=usequery)
+      * `routing.js` - this hook contains the methods for generating urls for the app.
+      * `useURLQuery.js` - this hook uses react-router-dom's useLocation hook in conjunction with URLSearchParams to provide the application with a consistent way to access url query strings
+	* `services` - contains external api fetch call related items
+	  * `api` - api
+	    * `actions` - this would contain files with fetch actions that can be invoked to make api calls with whatever parameters are required to fulfill that fetch call
+	    * `axios-client.js` - Wrapper for [react-fetching-library](https://marcin-piela.github.io/react-fetching-library/#/)
+	    * `buildAxiosRequest.js` - Custom axios library wrapper to build requests and handle response transformations
+	    * `endpoints.js` - external api endpoints are set and defined here
 	* `support` - this contains the code for mocking APIs, as well as the mock data
 	  * `mock-data` - This the folder structure under here should match the paths for `setupProxy.js`.
 	  * `src/setupProxy.js` - This is the place where you will mock all the API calls.
