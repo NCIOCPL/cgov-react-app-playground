@@ -5,9 +5,9 @@ You must create you ticket branches off the NCIOCPL repo such that secrets are u
 
 ## Steps to Create a new React App Repo
 1. Create an empty repository from NCIOCPL
-1. Download a copy of this repository (detatched from git)
-1. Run `npm ci`
-2. Make changes to the following files:
+2. Download a copy of this repository (detatched from git)
+3. Run `npm ci`
+4. Make changes to the following files:
    * `config/webpack.config.js` - change:
      - `library: 'nci-cgov-react-app-playground',` to be
      - `library: 'nci-REPO_NAME_HERE',` where the library name looks something like `nci-sitewide-search-app`
@@ -16,8 +16,8 @@ You must create you ticket branches off the NCIOCPL repo such that secrets are u
 	 * Modify `package.json` to set the `name`, `version`, `repository.url`, `bugs.url` to this repos values.
 	   * Run `` to update the lock.
 	 * modify the `appPaths` constant in `src/hooks/routing` to setup all the routes for your app. See [Routing](#routing).
-2. Remove any components from `src/components/atomic` and `src/components/molecules` that are not needed. (For example if you don't have videos, remove the youtube-video-player)
-1. Go to the NCIOCPL Organization Secrets and add permissions to the  new repository for these secrets:
+5. Remove any components from `src/components/atomic` and `src/components/molecules` that are not needed. (For example if you don't have videos, remove the youtube-video-player)
+6. Go to the NCIOCPL Organization Secrets and add permissions to the  new repository for these secrets:
    * ...
 
 ## Folder Structure
@@ -54,8 +54,8 @@ You must create you ticket branches off the NCIOCPL repo such that secrets are u
       * `customFetch.js` - this hook acts as a wrapper for `useQuery` hook for the external fetch library [react-fetching-library](https://marcin-piela.github.io/react-fetching-library/#/?id=usequery)
       * `routing.js` - this hook contains the methods for generating urls for the app.
       * `useURLQuery.js` - this hook uses react-router-dom's useLocation hook in conjunction with URLSearchParams to provide the application with a consistent way to access url query strings
-	* `services` - contains external api fetch call related items
-	  * `api` - api
+	* `services` - contains source code for related external services
+	  * `api` - contains api fetch call related items
 	    * `actions` - this would contain files with fetch actions that can be invoked to make api calls with whatever parameters are required to fulfill that fetch call
 	    * `axios-client.js` - Wrapper for [react-fetching-library](https://marcin-piela.github.io/react-fetching-library/#/)
 	    * `buildAxiosRequest.js` - Custom axios library wrapper to build requests and handle response transformations
@@ -70,6 +70,71 @@ You must create you ticket branches off the NCIOCPL repo such that secrets are u
 	* `jest-test-setup` - for jest configuration you want defined before running each test
 	* `package.json` and `package-lock.json` - you should know what these are.
 	* `README.md` - this document
+
+## Analytics for the NCI Event-Driven Data Layer (EDDL)
+Handling analytics requires that the following code be used for a page load event:
+```
+window.NCIDataLayer = window.NCIDataLayer || [];
+window.NCIDataLayer.push({
+  type: 'PageLoad',
+  event: '<EVENT_NAME>',
+  page: {
+    name: "",
+    title: "",
+    metaTitle: "",
+    language: "",
+    type: "",
+    audience: "",
+    channel: "",
+    contentGroup: "",
+    publishedDate: Date
+    additionalDetails: {}
+  }
+});
+```
+
+and the following for click events:
+```
+window.NCIDataLayer.push({
+  type: 'Other',
+  event: '<EVENT_NAME>',
+  data: {
+
+  }
+})
+```
+
+One of the MOST IMPORTANT things is that page load events ALWAYS preceed click events. The EDDL keeps track of the page information raised during a page load, and that information is pushed out to the Analytics Tool with the click/other data payload. So if a click event is raised by the app BEFORE the page load it is associated with, then bad things happen...
+
+### How the react-tracker Package Works
+The [react-tracking library](https://github.com/nytimes/react-tracking) offers a way for embedding analytics agnostic event tracking in a react app. React-tracker OOB allows you to set various contextual data points in each of your components, such that if a nested component raises a tracking event, those data points are included in the data payload.
+
+For example say you are displaying a search results page. You can:
+* From the view component for the search results, you `track({ pageName: 'Results Page', searchTerm: 'chicken'})`
+* From the results listing component you `track({numResults: 322})`
+* Then on a specific result component on a click handler of a link you can
+   ```
+   tracking.trackEvent({
+      action: 'result_link_click',
+      position: thePosition,
+      title: result.title
+   });
+   ```
+Then when a user clicks on a result link a tracking event is dispatched with:
+```
+{
+  pageName: 'Results Page',
+  searchTerm: 'chicken',
+  numResults: 322,
+  action: 'result_link_click',
+  position: 3,
+  title: 'A title'
+}
+```
+
+We have created an AnalyticsProvider higher-order component that wraps our App "component". This provider wires up a custom dispatch function to the react-tracking library. This custom function is the `analyticsHandler` parameter passed into the initialize function.
+
+A react-tracker dispatch function takes in a data payload that has no predefined structured.
 
 ## Routing
 `src/routing.js` contains a hook, useAppPaths that return helper functions that are used to not only generate URLs for a route, but also can be used to define the routes in your App.js file.
