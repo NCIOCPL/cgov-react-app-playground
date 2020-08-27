@@ -16,6 +16,7 @@ You must create you ticket branches off the NCIOCPL repo such that secrets are u
 	 * Modify `package.json` to set the `name`, `version`, `repository.url`, `bugs.url` to this repos values.
 	   * Run `` to update the lock.
 	 * modify the `appPaths` constant in `src/hooks/routing` to setup all the routes for your app. See [Routing](#routing).
+2. Remove any components from `src/components/atomic` and `src/components/molecules` that are not needed. (For example if you don't have videos, remove the youtube-video-player)
 1. Go to the NCIOCPL Organization Secrets and add permissions to the  new repository for these secrets:
    * ...
 
