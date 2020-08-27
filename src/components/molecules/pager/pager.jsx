@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { i18n } from '../../../utils';
+import { i18n } from './i18n';
 import { useURLQuery } from '../../../hooks';
 import './pager.scss';
 
@@ -10,6 +10,9 @@ const Pager = ({
 	testid = 'tid-results-pager',
 	keyword,
 	resultsPerPage,
+	previousLabel = 'Previous',
+	nextLabel = 'Next',
+	screenReader = 'Go To Page',
 	language = 'en',
 }) => {
 	const urlQuery = useURLQuery();
@@ -35,12 +38,12 @@ const Pager = ({
 				{(i === current && (
 					<div className={bstate}>
 						{i}
-						<span className="show-for-sr">{i18n.goToPage[language]}</span>
+						<span className="show-for-sr">{screenReader}</span>
 					</div>
 				)) || (
 					<a href={linkPath} className={bstate} aria-current={i === current}>
 						{i}
-						<span className="show-for-sr">{i18n.goToPage[language]}</span>
+						<span className="show-for-sr">{screenReader}</span>
 					</a>
 				)}
 			</li>
@@ -124,7 +127,7 @@ const Pager = ({
 				href={linkPathPrevious}
 				className="pager__button pager__previous"
 				aria-label={`Goto previous, Page ${current - 1}`}>
-				{`< ${i18n.previous[language]}`}
+				{`< ${previousLabel}`}
 			</a>
 		</li>
 	);
@@ -134,7 +137,7 @@ const Pager = ({
 				href={linkPathNext}
 				className="pager__button pager__next"
 				aria-label={`Goto next, Page ${current + 1}`}>
-				{`${i18n.next[language]} >`}
+				{`${nextLabel} >`}
 			</a>
 		</li>
 	);
@@ -158,6 +161,9 @@ Pager.propTypes = {
 	totalResults: PropTypes.number,
 	resultsPerPage: PropTypes.number,
 	keyword: PropTypes.string,
+	nextLabel: PropTypes.string,
+	previousLabel: PropTypes.string,
+	screenReader: PropTypes.string,
 };
 
 export default Pager;

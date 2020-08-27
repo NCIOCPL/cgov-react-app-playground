@@ -21,24 +21,4 @@ export const i18n = {
 		en: 'Search',
 		es: 'Buscar',
 	},
-	previous: {
-		en: 'Previous',
-		es: 'Anterior',
-	},
-	next: {
-		en: 'Next',
-		es: 'Siguiente',
-	},
-	show: {
-		en: 'Show',
-		es: 'Mostrar',
-	},
-	resultsPerPage: {
-		en: 'results per page',
-		es: 'resultados por página',
-	},
-	goToPage: {
-		en: 'Go to Page',
-		es: 'Ir a la Página',
-	},
 };
