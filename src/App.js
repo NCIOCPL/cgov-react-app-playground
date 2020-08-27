@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import track from 'react-tracking';
 
-import './styles/dictionaries.scss';
+import './styles/app.scss';
 
 import { useAppPaths } from './hooks';
 import { Home, ItemDetails, PageNotFound } from './views';

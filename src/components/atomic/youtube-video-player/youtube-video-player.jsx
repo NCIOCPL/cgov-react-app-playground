@@ -1,8 +1,10 @@
 /* global YT */
 /* eslint no-undef: "error" */
-
-import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+
+import "./youtube-video-player.scss";
+
 const YoutubeVideoPlayer = ({
 	youtubeId,
 	videoTitle,
