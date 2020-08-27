@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 
 import RemovableTag from '../RemovableTag';
@@ -9,7 +9,7 @@ describe('RemovableTag component', () => {
 		const label = 'Mock Label';
 		const onRemove = jest.fn();
 
-		const { getByRole, getByLabelText, container } = render(
+		const { container } = render(
 			<RemovableTag key={key} label={label} onRemove={onRemove} />
 		);
 		const tagLabel = container.querySelector('.cts-removable-tag__label');
@@ -19,7 +19,7 @@ describe('RemovableTag component', () => {
 		).toBeInTheDocument();
 		expect(tagLabel).toHaveTextContent(label);
 		expect(tagLabel).toBeInTheDocument();
-		const tagButton = getByRole('button');
+		const tagButton = screen.getByRole('button');
 		expect(tagButton.value).toEqual(label);
 		fireEvent.click(tagButton);
 		expect(onRemove).toBeCalled();
