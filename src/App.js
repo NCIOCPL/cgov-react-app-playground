@@ -1,31 +1,36 @@
-import { Router } from '@reach/router';
-import React, { useEffect } from "react";
-import { useStateValue } from "./store/store";
-import track from "react-tracking";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import track from 'react-tracking';
 
-import "./styles/dictionaries.scss";
+import './styles/app.scss';
 
-import { paths } from './constants';
-import DisplayGlossary from './views/DisplayGlossary';
-import SearchGlossary from './views/SearchGlossary';
+import { useAppPaths } from './hooks';
+import { Home, ItemDetails, PageNotFound } from './views';
+
 
 const App = ({ tracking }) => {
-  // this should be a DUMB component that just displays our display(group) components
-  const [{ dictionaryName }] = useStateValue();
+	// this should be a DUMB component that just displays our display(group) components
+	const {
+		HomePath,
+		ItemDetailsPath,
+	} = useAppPaths();
 
-  //example tracking setup for pageload
-  useEffect(() => {
-    tracking.trackEvent({action: 'pageLoad'})
-  }, [tracking]);
+	return (
+		<Router>
+			<Routes>
+				<Route path={HomePath()} element={<Home />} />
+				<Route path={ItemDetailsPath()} element={<ItemDetails />} />
+				<Route path="/*" element={<PageNotFound />} />
+			</Routes>
+		</Router>
+	);
+};
 
-  return (
-      <Router basepath={`/`}>
-        <DisplayGlossary path={paths.HOME} dictionaryName={dictionaryName} />
-        <SearchGlossary path={paths.SEARCH} dictionaryName={dictionaryName} />
-      </Router>
-  );
+App.propTypes = {
+	tracking: PropTypes.object,
 };
 
 export default track({
-  page: "app_load"
+	page: 'app_load',
 })(App);

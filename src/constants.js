@@ -1,5 +1,1 @@
-// Paths
-export const paths = {
-    HOME: '/',
-    SEARCH: '/search'
-};
+// Add any constants here

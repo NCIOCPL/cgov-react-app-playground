@@ -1,4 +1,5 @@
 {
-  "testFiles": "**/*.feature",
-  "video": false
+	"testFiles": "**/*.feature",
+	"video": false,
+	"baseUrl": "http://localhost:3000"
 }
