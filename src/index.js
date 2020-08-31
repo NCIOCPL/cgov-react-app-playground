@@ -1,17 +1,19 @@
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
 import './polyfills';
+
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-import { StateProvider } from './store/store';
-import reducer from './store/reducer';
-import { AnalyticsProvider, EddlAnalyticsProvider } from './tracking';
-import * as serviceWorker from './serviceWorker';
-import { getProductTestBase } from './utils';
 import { ClientContextProvider } from 'react-fetching-library';
+
+import App from './App';
 import { getAxiosClient } from './services/api/axios-client';
+import * as serviceWorker from './serviceWorker';
+import reducer from './store/reducer';
+import { StateProvider } from './store/store';
+import { AnalyticsProvider, EddlAnalyticsProvider } from './tracking';
+import { getProductTestBase } from './utils';
 import { ErrorBoundary } from './views';
 
 /**
@@ -53,7 +55,7 @@ const initialize = ({
 		canonicalHost,
 		language,
 		siteName,
-		title
+		title,
 	};
 
 	// Determine the analytics HoC we are going to use.
