@@ -29,12 +29,12 @@ export function setLanguage(language) {
  * Sets and returns defined API endpoint URL based on service name passed in
  *
  * @param {string} serviceName - Given name of defined API service endpoint
- * @return {string} url - Endpoint URL
+ * @return {string} endpoint - Endpoint URL
  */
 export const getEndpoint = (serviceName) => {
 	// Define api endpoints here
-	const urls = {
+	const endpoints = {
 		sampleCall: `${API_ENDPOINT}/sampleendpoint`,
 	};
-	return urls[serviceName];
+	return endpoints[serviceName];
 };

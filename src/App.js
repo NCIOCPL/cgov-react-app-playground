@@ -8,13 +8,9 @@ import './styles/app.scss';
 import { useAppPaths } from './hooks';
 import { Home, ItemDetails, PageNotFound } from './views';
 
-
 const App = ({ tracking }) => {
 	// this should be a DUMB component that just displays our display(group) components
-	const {
-		HomePath,
-		ItemDetailsPath,
-	} = useAppPaths();
+	const { HomePath, ItemDetailsPath } = useAppPaths();
 
 	return (
 		<Router>
