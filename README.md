@@ -6,13 +6,13 @@
 - [Steps to Create a new React App Repo](#steps-to-create-a-new-react-app-repo)
 - [Folder Structure](#folder-structure)
 - [Making API Calls](#making-api-calls)
-- [Analytics for the NCI Event-Driven Data Layer (EDDL)](#analytics-for-the-nci-event-driven-data-layer-(eddl))
-    - [How the react-tracker Package Works](#how-the-react-tracker-package-works)
+- [Analytics for the NCI Event-Driven Data Layer (EDDL)](<#analytics-for-the-nci-event-driven-data-layer-(eddl)>)
+  - [How the react-tracker Package Works](#how-the-react-tracker-package-works)
 - [Routing](#routing)
-    - [Using useAppPaths to generate a URL](#using-useapppaths-to-generate-a-url)
-    - [Using useAppPaths to get a route](#using-useapppaths-to-get-a-route)
+  - [Using useAppPaths to generate a URL](#using-useapppaths-to-generate-a-url)
+  - [Using useAppPaths to get a route](#using-useapppaths-to-get-a-route)
 - [The API Mocks](#the-api-mocks)
-    - [Adding API Mocks](#adding-api-mocks)
+  - [Adding API Mocks](#adding-api-mocks)
 
 ## Development workflow
 
@@ -70,22 +70,22 @@ You must create you ticket branches off the NCIOCPL repo such that secrets are u
       - `customFetch.js` - this hook acts as a wrapper for `useQuery` hook for the external fetch library [react-fetching-library](https://marcin-piela.github.io/react-fetching-library/#/?id=usequery)
       - `routing.js` - this hook contains the methods for generating urls for the app.
       - `useURLQuery.js` - this hook uses react-router-dom's useLocation hook in conjunction with URLSearchParams to provide the application with a consistent way to access url query strings
-        _ `services` - contains source code for related external services
-        _ `api` - contains api fetch call related items. Checkout [Making API Calls](#making-api-calls) to find out how to configure API endpoints and add fetch actions.
-        _ `actions` - this would contain files with fetch actions that can be invoked to make api calls with whatever parameters are required to fulfill that fetch call
-        _ `axios-client.js` - Wrapper for [react-fetching-library](https://marcin-piela.github.io/react-fetching-library/#/)
-        _ `buildAxiosRequest.js` - Custom axios library wrapper to build requests and handle response transformations
-        _ `endpoints.js` - external api endpoints are set and defined here
-        _ `support` - this contains the code for mocking APIs, as well as the mock data
-        _ `mock-data` - This the folder structure under here should match the paths for `setupProxy.js`.
-        _ `src/setupProxy.js` - This is the place where you will mock all the API calls.
-        _ `.editorconfig` - editorrc file to help ensure saved files are consistent with linter.
-        _ `.eslintrc.js` - The linter config. These are based off of AirBnB react rules that @arcepaul modified.
-        _ `.gitignore` - gitignore file based on CRA, with additions for our stack. (e.g. ignore cypress screenshots)
-        _ `.prettierrc` - similar to editorconfig. help with linter rules.
-        _ `jest-test-setup` - for jest configuration you want defined before running each test
-        _ `package.json` and `package-lock.json` - you should know what these are.
-        _ `README.md` - this document
+    - `services` - contains source code for related external services
+      - `api` - contains api fetch call related items. Checkout [Making API Calls](#making-api-calls) to find out how to configure API endpoints and add fetch actions.
+        - `actions` - this would contain files with fetch actions that can be invoked to make api calls with whatever parameters are required to fulfill that fetch call
+        - `axios-client.js` - Wrapper for [react-fetching-library](https://marcin-piela.github.io/react-fetching-library/#/)
+        - `buildAxiosRequest.js` - Custom axios library wrapper to build requests and handle response transformations
+        - `endpoints.js` - external api endpoints are set and defined here
+  - `support` - this contains the code for mocking APIs, as well as the mock data
+    - `mock-data` - This the folder structure under here should match the paths for `setupProxy.js`.
+    - `src/setupProxy.js` - This is the place where you will mock all the API calls.
+  - `.editorconfig` - editorrc file to help ensure saved files are consistent with linter.
+  - `.eslintrc.js` - The linter config. These are based off of AirBnB react rules that @arcepaul modified.
+  - `.gitignore` - gitignore file based on CRA, with additions for our stack. (e.g. ignore cypress screenshots)
+  - `.prettierrc` - similar to editorconfig. help with linter rules.
+  - `jest-test-setup` - for jest configuration you want defined before running each test
+  - `package.json` and `package-lock.json` - you should know what these are.
+  - `README.md` - this document
 
 ## Making API Calls
 
@@ -97,7 +97,7 @@ based on address.
 1. Add API domain base endpoint as an initialization parameter and add to "initialState"
    in `/src/index.js` to support an additional call for this service.
 
-   ```
+   ```js
    ...snip...
 
    const initialize = ({
@@ -123,7 +123,7 @@ based on address.
 2. Initialize variables and create convenience method to set this variable in `/src/services/api/endpoints.js`
    Initialize "GOOGLE_API_ENDPOINT" and create method "setGoogleAPIEndpoint".
 
-   ```
+   ```js
    let GOOGLE_API_ENDPOINT;
 
    /**
@@ -140,11 +140,10 @@ based on address.
 3. Update `/src/services/api/axios-client.js`
    Set "GOOGLE_API_ENDPOINT" by importing "setGoogleAPIEndpoint" from endpoints.js
    using "googleAPIEndpoint" that was provided as an initialization parameter by destructuring it from "initialize".
-   ```
+
+   ```js
    ...snip...
    import { ..., setGoogleAPIEndpoint } from './endpoints';
-   ```
-
 
     export const getAxiosClient = (initialize) => {
        const { ..., googleAPIEndpoint } = initialize;
@@ -152,11 +151,11 @@ based on address.
        ...snip...
     }
     ...snip...
-    ```
+   ```
 
 4. Add a service name to "getEndpoints" in `/src/services/api/endpoints.js`
 
-   ```
+   ```js
    const endpoints = {
     ...,
    	geoCode: `${GOOGLE_API_ENDPOINT}/geocode/json`,
@@ -166,7 +165,7 @@ based on address.
 
 5. A fetch action can then be defined by creating "getGeocodeResults.js" in `/src/services/api/actions`
 
-   ```
+   ```js
    import { getEndpoint } from '../endpoints';
 
    export const getGeocodeResults = ({ address }) => {
@@ -182,13 +181,13 @@ based on address.
 
 6. Make the fetch calls using "useCustomQuery".
 
-   ```
+   ```js
    import { useCustomQuery } from 'src/hooks';
    import { getGeocodeResults } from 'src/services/api/actions/getGeocodeResults';
 
    const sampleView = () => {
-       const address = '1600+Amphitheatre+Parkway,+Mountain+View,+CA';
-       const fetchResults = useCustomQuery(getGeocodeResults({ address }));
+   	const address = '1600+Amphitheatre+Parkway,+Mountain+View,+CA';
+   	const fetchResults = useCustomQuery(getGeocodeResults({ address }));
    };
    ```
 
@@ -198,7 +197,7 @@ based on address.
 
 Handling analytics requires that the following code be used for a page load event:
 
-```
+```js
 window.NCIDataLayer = window.NCIDataLayer || [];
 window.NCIDataLayer.push({
   type: 'PageLoad',
@@ -220,14 +219,12 @@ window.NCIDataLayer.push({
 
 and the following for click events:
 
-```
+```js
 window.NCIDataLayer.push({
-  type: 'Other',
-  event: '<EVENT_NAME>',
-  data: {
-
-  }
-})
+	type: 'Other',
+	event: '<EVENT_NAME>',
+	data: {},
+});
 ```
 
 One of the MOST IMPORTANT things is that page load events ALWAYS preceed click events. The EDDL keeps track of the page information raised during a page load, and that information is pushed out to the Analytics Tool with the click/other data payload. So if a click event is raised by the app BEFORE the page load it is associated with, then bad things happen...
@@ -241,16 +238,16 @@ For example say you are displaying a search results page. You can:
 - From the view component for the search results, you `track({ pageName: 'Results Page', searchTerm: 'chicken'})`
 - From the results listing component you `track({numResults: 322})`
 - Then on a specific result component on a click handler of a link you can
-  ```
+  ```js
   tracking.trackEvent({
-     action: 'result_link_click',
-     position: thePosition,
-     title: result.title
+  	action: 'result_link_click',
+  	position: thePosition,
+  	title: result.title,
   });
   ```
   Then when a user clicks on a result link a tracking event is dispatched with:
 
-```
+```js
 {
   pageName: 'Results Page',
   searchTerm: 'chicken',
@@ -275,7 +272,7 @@ A react-tracker dispatch function takes in a data payload that has no predefined
 
 **Example**
 
-```
+```js
 // in routing.js
 const appPaths = {
 	HomePath: '/',
@@ -305,7 +302,7 @@ If you do not pass any parameters into the `useAppPaths` functions, then the ori
 
 **Example**
 
-```
+```js
 // in routing.js
 const appPaths = {
 	HomePath: '/',
@@ -333,94 +330,164 @@ const {
 </Router>
 ```
 
-## The API Mocks
+## JavaScript
 
-The api is available at `http://localhost:3000/api/*` where \* is the full path as it would be in the API.
+### Imports
 
-### Adding API Mocks
+Imports at the top of each page should always be alphabetized and follow this order.
 
-1. For example, if the actual api request is `https://webapis.cancer.gov/sampleapi/v1/sampleendpoint?id=1234`,
-   save the desired api response to a file named `1234.json` in the mock-data directory (support/mock_data)
-   that matches the same path as the request `<repo>/support/mock-data/sampleapi/v1/sampleendpoint/`
-   folder as a file named `1234.json`.
-2. Go to [setupProxy.js](support/src/setupProxy.js) and add a route for the api mock to the endpoint
+- Node/xml packages and frameworks.
+- Specific style sheets or json (scss/css/etc)
+- Application or component imports
 
-   ```
-   /**
-    * Middleware setup for "setupProxy"
-    * @param {Express.Application} app
-    */
-   const middleware = (app) => {
-   	// This looks like http://localhost:3000/api/sampleapi/v1/sampleendpoint?id=1234
-   	app.use('/api/sampleapi/v1/sampleendpoint/:id', getSampleApiSampleEndpoint);
+```js
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useTracking } from 'react-tracking';
 
-   	...
-   };
-   ```
+import './Application.scss';
 
-3. Add a middleware to handle the route created in step 2
+import { useAppPaths } from '../../hooks';
+import { useStateValue } from '../../store/store.js';
+```
 
-   ```
-   /**
-    * getSampleApiSampleEndpoint - Middleware for getting sample API endpoint params
-    * @param {Express.Request} req
-    * @param {Express.Response} res
-    * @param {Function} next
-    */
-   const getSampleApiSampleEndpoint = async (req, res, next) => {
-   	const { id } = req.params;
+### Linting
 
-   	// IMPLEMENTOR NOTE: You are mocking the API, so if the API returns an object
-   	// when something is not found like search results, you need to handle that.
-   	// This is custom code and is not something easily mocked up.
+We recommend combining `Prettier` with the `Eslint` plugins for eslint and formatting while in development and before any code is pushed to a pull request.
 
-   	// IMPLEMENTOR NOTE: Always good to integration test 500 errors with your app
-   	if ( id === 'server-error') {
-   		res.status(500).end();
-   	}
+## Style Sheets
 
-   	// IMPLEMENTOR NOTE: Always good to integration test 404 errors with your app
-   	if ( id === 'not-found') {
-   		res.status(404).end();
-   	}
+A site’s architecture should be based on its goals and purposes. This means the guidance here should be adapted to different sites and situations.
 
-   	// IMPLEMENTOR NOTE: Always good to integration test 400 errors with your app
-   	if ( id === 'bad-request') {
-   		res.status(400).end();
-   	}
+Styles should be organized in the directory with the component it is being consumed by and follow the same naming convention. Such as `definition.jsx` and `definition.scss`
 
-   	// IMPLEMENTOR NOTE: The mock data should match the API's folder structure.
-   	const mockDir = path.join(
-   		__dirname,
-   		'..',
-   		'mock-data',
-   		'sampleapi',
-   		'v1',
-   		'sampleendpoint'
-   	);
-   	try {
-   		// IMPLEMENTOR NOTE: The mock data file name should be the end part of the path
-   		// if it is dynamic and any other query params to make it distinct.
-   		// This example is basic...
-   		const mockFile = path.join(mockDir, `${id}.json`);
+```
+src
+├── components/
+│   ├── molecules/
+│       ├── definition/
+│           ├── definition.jsx
+│           ├── definition.scss
+```
 
-   		try {
-   			// Test if it exists.
-   			await accessAsync(mockFile);
-   			res.sendFile(mockFile);
-   		} catch (err) {
-   			// Access denied to open file, or not found.
-   			// treat at 404, or your choice.
-   			console.error(err);
-   			res.status(404).end();
-   		}
-   	} catch (err) {
-   		// This must be an error from sending the file, or joining
-   		// the path.
-   		console.error(err);
-   		res.status(500).end();
-   	}
-   };
-   ```
+## Naming
 
-4. Restart the server
+- HTML elements should be in lowercase.
+
+```css
+body,
+div {
+}
+```
+
+- Classes should be lowercase.
+- Avoid camelcase.
+- Name things clearly.
+- Write classes semantically. Name its function not its appearance.
+
+```css
+// Bad
+// Avoid uppercase
+.ClassNAME {
+}
+
+// Avoid camel case
+.commentForm {
+}
+
+// What is a c1-xr? Use a more explicit name.
+.c1-xr {
+}
+```
+
+- Avoid presentation- or location-specific words in names, as this will cause problems when you (invariably) need to change the color, width, or feature later.
+
+```css
+// Bad
+.blue
+.text-gray
+.100width-box
+
+// Good
+.warning
+.primary
+.lg-box;
+```
+
+- Be wary of naming components based on content, as this limits the use of the class.
+
+```css
+// Danger zone
+.product_list
+
+// Better
+.item_list;
+```
+
+- Don’t abbreviate unless it’s a well-known abbreviation.
+
+```css
+// Bad
+.bm-rd
+
+// Good
+.block--lg;
+```
+
+- Use quotes in type pseudo selectors.
+
+```css
+// Good
+.top_image[type='text'] {
+}
+```
+
+- Name CSS components and modules with singular nouns.
+
+```css
+.button {
+}
+```
+
+- Name modifiers and state-based rules with adjectives.
+
+```css
+.is_hovered {
+}
+```
+
+- If your CSS has to interface with other CSS libraries, consider namespacing every class.
+
+```css
+.f18-component
+```
+
+### Naming Methodologies
+
+The recommended way to do this is using an existing [BEM](https://en.bem.info/methodology/) methodology.
+
+```css
+// block
+.inset {
+	margin-left: 15%;
+
+	// element
+	.inset__content {
+		padding: 3em;
+	}
+}
+
+// modifier
+.inset--sm {
+	margin-left: 10%;
+
+	.inset__content {
+		padding: 1em;
+	}
+}
+
+// modifier
+.inset--lg {
+	margin-left: 20%;
+}
+```
