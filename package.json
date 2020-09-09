@@ -1,6 +1,6 @@
 {
 	"name": "@nciocpl/cgov-react-app-playground",
-	"version": "1.0.0",
+	"version": "0.1.0-beta.1",
 	"description": "React App Scaffolding for Cgov Apps",
 	"repository": {
 		"type": "git",
@@ -153,6 +153,7 @@
 	"release-it": {
 		"hooks": {},
 		"git": {
+      "changelog": "git log --pretty=format:'* %s (%h)' [REV_RANGE]",
 			"commitMessage": "Release ${version}",
 			"commitArgs": [],
 			"tag": true,
