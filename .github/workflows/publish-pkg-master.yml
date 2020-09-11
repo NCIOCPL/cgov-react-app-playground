@@ -1,0 +1,42 @@
+name: Publish package and release when pushed to master
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the master branch
+  push:
+    branches:
+      - master
+jobs:
+  publish-package:
+    name: Publish package and release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set Variables
+        # pull version and release info from commit message
+        
+        ## This installs the correct node version
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      ## Restore cache
+      - name: Restore npm cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: cache-${{ hashFiles('package-lock.json') }}
+
+      ## Install using CI
+      - name: Install Deps
+        run: npm ci
+
+      ## Runs jest unit and cypress e2e testing and merges coverage reports
+      - name: Run tests
+        run: npm run tests
+        env:
+          CI: true
+
+      # release-it script (build package, publish, release)
+      - name: Run release-it
+        run: npm run release v${pkg-version}
+      
