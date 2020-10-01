@@ -17,7 +17,7 @@ import { getProductTestBase } from './utils';
 import { ErrorBoundary } from './views';
 
 /**
- * Initializes the Glossary App.
+ * Initializes the Playground App.
  * @param {object} params - Configuration for the app
  * @param {string} params.analyticsName - The name of the dictionary for analytics purposes.
  */
@@ -27,18 +27,18 @@ const initialize = ({
 	// this outside of the digital platform, and wants to hookup
 	// their own analytics. See index.html for an overly complicated
 	// configuration that handles logging to the console.
-	analyticsHandler = "EddlAnalyticsHandler",
+	analyticsHandler = 'EddlAnalyticsHandler',
 	analyticsContentGroup = 'Global Search',
-	analyticsPublishedDate = "unknown",
-	appId = "@@/DEFAULT_REACT_APP_ID",
-	baseHost = "http://localhost:3000",
-	basePath = "/",
-	apiEndpoint = "/api/sampleapi/v1/",
-	canonicalHost = "https://www.cancer.gov",
-	language = "en",
-	rootId = "NCI-app-root",
-	siteName = "National Cancer Institute",
-	title = "NCI Search Results",
+	analyticsPublishedDate = 'unknown',
+	appId = '@@/DEFAULT_REACT_APP_ID',
+	baseHost = 'http://localhost:3000',
+	basePath = '/',
+	apiEndpoint = '/api/sampleapi/v1/',
+	canonicalHost = 'https://www.cancer.gov',
+	language = 'en',
+	rootId = 'NCI-app-root',
+	siteName = 'National Cancer Institute',
+	title = 'NCI Search Results',
 } = {}) => {
 	const appRootDOMNode = document.getElementById(rootId);
 	const isRehydrating = appRootDOMNode.getAttribute('data-isRehydrating');
@@ -62,25 +62,23 @@ const initialize = ({
 	// The following allows the app to be more portable, cgov will
 	// default to using EDDL Analytics. Other sites could supplier
 	// their own custom handler.
-	const AnalyticsHoC = ({children}) =>
-		analyticsHandler === 'EddlAnalyticsHandler'
-			? (
-				<EddlAnalyticsProvider
-					pageLanguage={language === 'es' ? 'spanish' : 'english'}
-					pageChannel={analyticsChannel}
-					pageContentGroup={analyticsContentGroup}
-					publishedDate={analyticsPublishedDate}>
-					{children}
-				</EddlAnalyticsProvider>
-			)
-			: (
-				<AnalyticsProvider analyticsHandler={analyticsHandler}>
-					{children}
-				</AnalyticsProvider>
-			);
+	const AnalyticsHoC = ({ children }) =>
+		analyticsHandler === 'EddlAnalyticsHandler' ? (
+			<EddlAnalyticsProvider
+				pageLanguage={language === 'es' ? 'spanish' : 'english'}
+				pageChannel={analyticsChannel}
+				pageContentGroup={analyticsContentGroup}
+				publishedDate={analyticsPublishedDate}>
+				{children}
+			</EddlAnalyticsProvider>
+		) : (
+			<AnalyticsProvider analyticsHandler={analyticsHandler}>
+				{children}
+			</AnalyticsProvider>
+		);
 
 	AnalyticsHoC.propTypes = {
-		children: PropTypes.node
+		children: PropTypes.node,
 	};
 
 	const AppBlock = () => {
@@ -106,6 +104,9 @@ const initialize = ({
 };
 
 export default initialize;
+
+//add initialize to window
+window.CgovReactAppPlayground = initialize;
 
 // The following lets us run the app in dev not in situ as would normally be the case.
 const appParams = window.APP_PARAMS || {};
