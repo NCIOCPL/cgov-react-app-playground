@@ -3,7 +3,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
-import "./youtube-video-player.scss";
+import './youtube-video-player.scss';
 
 const YoutubeVideoPlayer = ({
 	youtubeId,

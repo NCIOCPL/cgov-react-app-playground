@@ -1,17 +1,14 @@
 import { act, render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { ClientContextProvider } from 'react-fetching-library';
-
 
 import Home from '../Home';
 import { useStateValue } from '../../../store/store.js';
 import { MockAnalyticsProvider } from '../../../tracking';
 
-
 jest.mock('../../../store/store.js');
 
-const analyticsHandler = jest.fn(() => { });
+const analyticsHandler = jest.fn(() => {});
 let wrapper;
 
 describe('Home component(English)', () => {
@@ -48,7 +45,7 @@ describe('Home component(English)', () => {
 		const language = 'es';
 		const title = 'NCI Search Results';
 		const altLanguageBasePath = '/espanol/publicaciones/diccionario';
-		const siteName = "National Cancer Insitute";
+		const siteName = 'National Cancer Insitute';
 
 		useStateValue.mockReturnValue([
 			{
@@ -64,8 +61,8 @@ describe('Home component(English)', () => {
 
 		await act(async () => {
 			wrapper = render(
-				<MockAnalyticsProvider analyticsHandler={analyticsHandler} >
-					<MemoryRouter initialEntries={["/"]}>
+				<MockAnalyticsProvider analyticsHandler={analyticsHandler}>
+					<MemoryRouter initialEntries={['/']}>
 						<Home />
 					</MemoryRouter>
 				</MockAnalyticsProvider>

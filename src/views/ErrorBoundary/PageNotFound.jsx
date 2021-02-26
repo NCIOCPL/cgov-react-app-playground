@@ -8,7 +8,9 @@ import { i18n } from '../../utils';
 
 const PageNotFound = () => {
 	const [{ canonicalHost, language }] = useStateValue();
-	const [searchText, updateSearchText] = useState('');
+	// Why is searchText not being used anywhere in this file if we
+	// are using state???
+	const [, updateSearchText] = useState('');
 	const tracking = useTracking();
 
 	useEffect(() => {

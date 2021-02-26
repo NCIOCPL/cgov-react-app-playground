@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import track from 'react-tracking';
 
@@ -8,7 +7,7 @@ import './styles/app.scss';
 import { useAppPaths } from './hooks';
 import { Home, ItemDetails, PageNotFound } from './views';
 
-const App = ({ tracking }) => {
+const App = () => {
 	// this should be a DUMB component that just displays our display(group) components
 	const { HomePath, ItemDetailsPath } = useAppPaths();
 
@@ -21,10 +20,6 @@ const App = ({ tracking }) => {
 			</Routes>
 		</Router>
 	);
-};
-
-App.propTypes = {
-	tracking: PropTypes.object,
 };
 
 export default track({

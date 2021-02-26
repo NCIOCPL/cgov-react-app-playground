@@ -14,7 +14,7 @@ let wrapper;
 describe('', () => {
 	beforeEach(() => {
 		jest.spyOn(console, 'error');
-		console.error.mockImplementation(() => { });
+		console.error.mockImplementation(() => {});
 	});
 
 	afterEach(() => {
@@ -93,7 +93,9 @@ describe('', () => {
 			);
 		});
 		expect(
-			screen.getByText('Se produjo un error. Por favor, vuelva a intentar más tarde.')
+			screen.getByText(
+				'Se produjo un error. Por favor, vuelva a intentar más tarde.'
+			)
 		).toBeInTheDocument();
 	});
 
@@ -145,7 +147,7 @@ describe('', () => {
 		const apiBaseEndpoint = 'http://localhost:3000/api';
 		const language = 'en';
 		const contentMessage = 'Successful API call with content';
-		const id= '6789';
+		const id = '6789';
 		setLanguage(language);
 		setAPIEndpoint(apiBaseEndpoint);
 

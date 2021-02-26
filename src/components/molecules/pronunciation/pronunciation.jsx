@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import "./pronunciation.scss";
+import './pronunciation.scss';
 
 import { AudioPlayer } from '../../';
 

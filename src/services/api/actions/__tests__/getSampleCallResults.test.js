@@ -12,5 +12,4 @@ describe('getSampleCallResults action', () => {
 		};
 		expect(getSampleCallResults({ id })).toEqual(retAction);
 	});
-
 });
