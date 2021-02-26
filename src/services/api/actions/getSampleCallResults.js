@@ -1,9 +1,7 @@
-import { getEndpoint } from '../endpoints';
-
 export const getSampleCallResults = ({ id }) => {
-	const endpoint = getEndpoint('sampleCall');
 	return {
+		interceptorName: 'sampleApi',
 		method: 'GET',
-		endpoint: `${endpoint}/${id}`,
+		endpoint: `{{API_ENDPOINT}}/sampleendpoint/${id}`,
 	};
 };
