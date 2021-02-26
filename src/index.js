@@ -8,7 +8,10 @@ import ReactDOM from 'react-dom';
 import { ClientContextProvider } from 'react-fetching-library';
 
 import App from './App';
-import { getAxiosClient } from './services/api/axios-client';
+import {
+	getAxiosClient,
+	replacingRequestInterceptor,
+} from './services/api/common';
 import * as serviceWorker from './serviceWorker';
 import reducer from './store/reducer';
 import { StateProvider } from './store/store';
@@ -81,11 +84,18 @@ const initialize = ({
 		children: PropTypes.node,
 	};
 
+	// Setup any interceptors for RFL.
+	const interceptors = [
+		replacingRequestInterceptor('sampleAPI', {
+			API_ENDPOINT: apiEndpoint,
+		}),
+	];
+
 	const AppBlock = () => {
 		return (
 			<StateProvider initialState={initialState} reducer={reducer}>
 				<AnalyticsHoC>
-					<ClientContextProvider client={getAxiosClient(initialState)}>
+					<ClientContextProvider client={getAxiosClient(interceptors)}>
 						<ErrorBoundary>
 							<App />
 						</ErrorBoundary>
