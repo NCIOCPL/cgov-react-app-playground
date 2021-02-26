@@ -35,6 +35,10 @@ export const getEndpoint = (serviceName) => {
 	// Define api endpoints here
 	const endpoints = {
 		sampleCall: `${API_ENDPOINT}/sampleendpoint`,
+		// This is just a placeholder because the linter wanted us to remove
+		// LANGUAGE, but we want to keep the example here for those multi-
+		// lingual apps
+		exampleESCall: `${API_ENDPOINT}/${LANGUAGE}/sampleendpoint`,
 	};
 	return endpoints[serviceName];
 };

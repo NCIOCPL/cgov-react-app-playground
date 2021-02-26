@@ -8,7 +8,9 @@ import { getSampleCallResults } from '../../services/api/actions';
 const ItemDetails = () => {
 	const { id } = useParams();
 	const [doneLoading, setDoneLoading] = useState(false);
-	const [stateSampleCallResults, setStateSampleCallResults] = useState();
+	// Why is stateSampleCallResults not being used if we are using state
+	// for this???
+	const [, setStateSampleCallResults] = useState();
 	// Sample fetch results for the item
 	const sampleCallResults = useCustomQuery(getSampleCallResults({ id }));
 
@@ -30,10 +32,7 @@ const ItemDetails = () => {
 	return (
 		<>
 			{renderHelmet()}
-			{doneLoading && (
-				<div>THE ITEM CONTENTS WOULD GO HERE. OR 404.</div>
-
-			)}
+			{doneLoading && <div>THE ITEM CONTENTS WOULD GO HERE. OR 404.</div>}
 			{!doneLoading && <Spinner />}
 		</>
 	);

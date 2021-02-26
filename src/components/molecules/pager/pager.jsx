@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { i18n } from './i18n';
 import { useURLQuery } from '../../../hooks';
 import './pager.scss';
 
@@ -13,7 +12,6 @@ const Pager = ({
 	previousLabel = 'Previous',
 	nextLabel = 'Next',
 	screenReader = 'Go To Page',
-	language = 'en',
 }) => {
 	const urlQuery = useURLQuery();
 	const swKeywordKey = /swKeyword/i;
