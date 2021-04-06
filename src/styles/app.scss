@@ -1,6 +1,10 @@
 //views
 @import '../views/ErrorBoundary/PageNotFound';
 
+
+// molecules
+@import '../components/molecules/pager/pager';
+
 h1 {
 	margin-bottom: 0;
 }
