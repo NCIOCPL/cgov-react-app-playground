@@ -10,6 +10,9 @@ module.exports = {
 		'plugin:react/recommended',
 		'plugin:react-hooks/recommended',
 		'plugin:jsx-a11y/recommended',
+		'plugin:jest/recommended',
+		'plugin:jest/style',
+		'plugin:testing-library/react',
 		'plugin:prettier/recommended',
 	],
 	settings: {
@@ -29,6 +32,16 @@ module.exports = {
 	rules: {
 		'react/display-name': 'off',
 		'react-hooks/exhaustive-deps': 'off',
+		'jest/consistent-test-it': ['error', { fn: 'it' }],
+		'jest/no-if': 'error',
+		'jest/no-test-return-statement': 'error',
+		'jest/require-to-throw-message': 'error',
+		'jest/require-top-level-describe': 'error',
+		'testing-library/no-await-sync-events': 'error',
+		'testing-library/no-manual-cleanup': 'error',
+		'testing-library/no-render-in-setup': 'error',
+		'testing-library/prefer-explicit-assert': 'error',
+		'testing-library/prefer-wait-for': 'error',
 	},
 	globals: {
 		cy: true,
