@@ -1,4 +1,4 @@
-import { act, render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 
@@ -9,10 +9,9 @@ import { MockAnalyticsProvider } from '../../../tracking';
 jest.mock('../../../store/store.js');
 
 const analyticsHandler = jest.fn(() => {});
-let wrapper;
 
 describe('Home component(English)', () => {
-	test('should links on home page', async () => {
+	it('should links on home page', async () => {
 		const basePath = '/';
 		const canonicalHost = 'https://www.example.gov';
 		const language = 'en';
@@ -28,7 +27,7 @@ describe('Home component(English)', () => {
 			},
 		]);
 
-		const { container } = render(
+		render(
 			<MockAnalyticsProvider>
 				<MemoryRouter initialEntries={['/']}>
 					<Home />
@@ -36,10 +35,10 @@ describe('Home component(English)', () => {
 			</MockAnalyticsProvider>
 		);
 		expect(screen.getByText(title)).toBeInTheDocument();
-		expect(container.querySelectorAll('a').length).toEqual(4);
+		expect(screen.getAllByRole('link')).toHaveLength(4);
 	});
 
-	test('should fire click event on link', async () => {
+	it('should fire click event on link', async () => {
 		const basePath = '/';
 		const canonicalHost = 'https://www.example.gov';
 		const language = 'es';
@@ -59,19 +58,18 @@ describe('Home component(English)', () => {
 			},
 		]);
 
-		await act(async () => {
-			wrapper = render(
-				<MockAnalyticsProvider analyticsHandler={analyticsHandler}>
-					<MemoryRouter initialEntries={['/']}>
-						<Home />
-					</MemoryRouter>
-				</MockAnalyticsProvider>
-			);
-		});
+		render(
+			<MockAnalyticsProvider analyticsHandler={analyticsHandler}>
+				<MemoryRouter initialEntries={['/']}>
+					<Home />
+				</MemoryRouter>
+			</MockAnalyticsProvider>
+		);
 
-		const { container } = wrapper;
-		const link = container.querySelector('a');
-		fireEvent.click(link);
-		expect(analyticsHandler).toHaveBeenCalled();
+		const links = screen.getAllByRole('link');
+		for (const link of links) {
+			fireEvent.click(link);
+			expect(analyticsHandler).toHaveBeenCalled();
+		}
 	});
 });

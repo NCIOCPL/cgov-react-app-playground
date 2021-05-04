@@ -1,4 +1,4 @@
-import { act, cleanup, render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import axios from 'axios';
 import nock from 'nock';
 import React from 'react';
@@ -32,9 +32,7 @@ describe('App component', () => {
 		nock.enableNetConnect();
 	});
 
-	afterEach(cleanup);
-
-	test('HomePath route exists and matches expected route', async () => {
+	it('HomePath route exists and matches expected route', async () => {
 		const basePath = '/';
 		const language = 'en';
 		const siteName = 'National Cancer Institute';

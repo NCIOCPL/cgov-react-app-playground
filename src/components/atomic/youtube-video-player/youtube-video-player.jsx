@@ -50,11 +50,12 @@ const YoutubeVideoPlayer = ({
 
 	const renderPlaceholder = () => {
 		return swapped ? (
-			<div id="nci-video-player">
+			<div data-testid="#nci-video-player" id="nci-video-player">
 				{!window.YT && <span>An error occurred. Please try again later.</span>}
 			</div>
 		) : (
 			<button
+				data-testid="button.video-preview--container"
 				className="video-preview--container"
 				onClick={loadVideo}
 				tabIndex="0">
@@ -83,7 +84,9 @@ const YoutubeVideoPlayer = ({
 	};
 
 	return (
-		<div className="youtube-video-player flex-video widescreen rendered">
+		<div
+			data-testid=".youtube-video-player"
+			className="youtube-video-player flex-video widescreen rendered">
 			{renderPlaceholder()}
 		</div>
 	);
