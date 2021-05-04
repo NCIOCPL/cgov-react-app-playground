@@ -46,6 +46,7 @@ const AudioPlayer = ({ audioSrc, lang = 'en', tracking = () => {} }) => {
 	return (
 		<>
 			<audio
+				data-testid="audio"
 				src={audioSrc}
 				ref={playerRef}
 				onEnded={trackEnded}

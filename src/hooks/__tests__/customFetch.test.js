@@ -9,9 +9,8 @@ import { ErrorBoundary } from '../../views/ErrorBoundary';
 import { setLanguage, setAPIEndpoint } from '../../services/api/endpoints';
 
 jest.mock('../../store/store');
-let wrapper;
 
-describe('', () => {
+describe('customFetch', () => {
 	beforeEach(() => {
 		jest.spyOn(console, 'error');
 		console.error.mockImplementation(() => {});
@@ -21,7 +20,7 @@ describe('', () => {
 		console.error.mockRestore();
 	});
 
-	test('should throw an error using a non existent endpoint - English message', async () => {
+	it('should throw an error using a non existent endpoint - English message', async () => {
 		const basePath = '/';
 		const canonicalHost = 'https://www.example.gov';
 		const language = 'en';
@@ -59,7 +58,7 @@ describe('', () => {
 		).toBeInTheDocument();
 	});
 
-	test('should throw an error using a non existent endpoint - Spanish message', async () => {
+	it('should throw an error using a non existent endpoint - Spanish message', async () => {
 		const basePath = '/';
 		const canonicalHost = 'https://www.example.gov';
 		const language = 'es';
@@ -99,49 +98,7 @@ describe('', () => {
 		).toBeInTheDocument();
 	});
 
-	// test('useCustomQuery example should throw error - Spanish message', async () => {
-	// 	const dictionaryName = 'Cancer.gov';
-	// 	const dictionaryTitle = 'Diccionario de cáncer';
-	// 	const language = 'es';
-	// 	setDictionaryName(dictionaryName);
-	// 	setAudience('Patient');
-	// 	setLanguage(language);
-	// 	useStateValue.mockReturnValue([
-	// 		{
-	// 			altLanguageDictionaryBasePath: '/cancer-terms',
-	// 			languageToggleSelector: '#LangList1 a',
-	// 			appId: 'mockAppId',
-	// 			canonicalHost: 'https://example.org',
-	// 			basePath: '/',
-	// 			dictionaryEndpoint: '/',
-	// 			dictionaryName,
-	// 			dictionaryTitle,
-	// 			language,
-	// 		},
-	// 	]);
-	// 	client = {
-	// 		query: async () => ({
-	// 			error: true,
-	// 			status: 500,
-	// 			payload: {},
-	// 		}),
-	// 	};
-	// 	await act(async () => {
-	// 		wrapper = render(
-	// 			<MockAnalyticsProvider>
-	// 				<ClientContextProvider client={client}>
-	// 					<ErrorBoundary>
-	// 						<UseCustomQuerySample />
-	// 					</ErrorBoundary>
-	// 				</ClientContextProvider>
-	// 			</MockAnalyticsProvider>
-	// 		);
-	// 	});
-	// 	const { getByText } = wrapper;
-	// 	expect(getByText(i18n.errorPageText[language])).toBeInTheDocument();
-	// });
-
-	test('useCustomQuery example should display content and not throw error', async () => {
+	it('useCustomQuery example should display content and not throw error', async () => {
 		const basePath = '/';
 		const canonicalHost = 'https://www.example.gov';
 		const apiBaseEndpoint = 'http://localhost:3000/api';
@@ -169,7 +126,7 @@ describe('', () => {
 			}),
 		};
 		await act(async () => {
-			wrapper = render(
+			render(
 				<MockAnalyticsProvider>
 					<ClientContextProvider client={client}>
 						<ErrorBoundary>
@@ -179,7 +136,6 @@ describe('', () => {
 				</MockAnalyticsProvider>
 			);
 		});
-		const { getByText } = wrapper;
-		expect(getByText(contentMessage)).toBeInTheDocument();
+		expect(screen.getByText(contentMessage)).toBeInTheDocument();
 	});
 });
