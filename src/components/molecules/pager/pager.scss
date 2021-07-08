@@ -1,15 +1,14 @@
-@import '../../../styles/breakpoints';
-
-.pager__navigation,
 .pager__container {
-	align-items: center;
-	display: flex;
-	justify-content: flex-start;
 	margin-left: 0;
-}
+	font-family: Noto Sans, Century Gothic, Arial, sans-serif;
 
-.pager__container {
 	.pager__navigation {
+		align-items: center;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-start;
+		margin-left: 0;
+
 		color: #25619b;
 		list-style-type: none;
 
@@ -31,6 +30,11 @@
 			display: block;
 			min-width: 24px;
 			padding: 2px 6px;
+			background-color: #fff;
+			appearance: none;
+			color: #2b7bba;
+			font-size: 100%;
+			cursor: pointer;
 			text-decoration: none;
 			white-space: nowrap;
 
@@ -42,27 +46,24 @@
 				}
 			}
 
+			&.hidden {
+				display: none;
+			}
+
 			&:hover {
 				background: #cbe8fc;
 			}
 		}
 
-		.pager__ellipses--right,
-		.pager__ellipses--left {
+		.pager__ellipsis--right,
+		.pager__ellipsis--left {
 			padding: 2px 4px;
 			cursor: default;
 		}
 	}
 }
 
-.pager__container {
-	border-top: 1px solid #000;
-	border-bottom: 1px solid #000;
-	padding: 16px 0;
-	margin-top: 16px;
-}
-
-@include break(medium) {
+@media only screen and (min-width: 641px) {
 	.pager__navigation,
 	.pager__container {
 		margin-left: auto;
@@ -71,6 +72,5 @@
 	.pager__container {
 		border: none;
 		margin-top: 0;
-		padding: 0 0 0 50px;
 	}
 }

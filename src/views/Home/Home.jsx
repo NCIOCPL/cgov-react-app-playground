@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { useTracking } from 'react-tracking';
 
+import { Pager } from '../../components';
 import { useAppPaths } from '../../hooks';
 import { useStateValue } from '../../store/store.js';
 
@@ -14,6 +15,7 @@ const Home = () => {
 	const [
 		{ altLanguageBasePath, baseHost, title, canonicalHost, siteName, language },
 	] = useStateValue();
+	const [pageNumber, setPageNumber] = useState(null);
 
 	// Get a reference to the tracking function for
 	// analytics.
@@ -93,6 +95,11 @@ const Home = () => {
 		});
 	};
 
+	const pageNavigationHandler = (pager) => {
+		const { page } = pager;
+		setPageNumber(page);
+	};
+
 	return (
 		<>
 			{renderHelmet()}
@@ -133,6 +140,16 @@ const Home = () => {
 						</Link>
 					</li>
 				</ul>
+
+				<h3>Pager Component</h3>
+				<div>
+					<Pager
+						current={pageNumber}
+						onPageNavigationChange={pageNavigationHandler}
+						resultsPerPage={5}
+						totalResults={100}
+					/>
+				</div>
 			</div>
 		</>
 	);

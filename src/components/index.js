@@ -8,4 +8,5 @@ export { default as YoutubeVideoPlayer } from './atomic/youtube-video-player';
 
 // molecules
 export { FigureCgovImage, FigureCgovVideo } from './molecules/figures';
+export { default as Pager } from './molecules/pager';
 export { default as Pronunciation } from './molecules/pronunciation';

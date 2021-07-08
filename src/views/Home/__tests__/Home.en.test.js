@@ -38,7 +38,7 @@ describe('Home component(English)', () => {
 		expect(screen.getAllByRole('link')).toHaveLength(4);
 	});
 
-	it('should fire click event on link', async () => {
+	test('should fire click event on link and pager next item click', async () => {
 		const basePath = '/';
 		const canonicalHost = 'https://www.example.gov';
 		const language = 'es';
@@ -71,5 +71,16 @@ describe('Home component(English)', () => {
 			fireEvent.click(link);
 			expect(analyticsHandler).toHaveBeenCalled();
 		}
+		expect(screen.getByLabelText('pager navigation')).toBeInTheDocument();
+		// Navigate to next page with next pager item button
+		await act(async () => {
+			fireEvent.click(screen.getByRole('button', { name: 'next page' }));
+		});
+
+		// Currently active page now should be page 2
+		expect(screen.getByRole('button', { name: 'page 2' })).toHaveAttribute(
+			'class',
+			'pager__button active'
+		);
 	});
 });
