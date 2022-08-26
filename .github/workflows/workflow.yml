@@ -1,5 +1,5 @@
 name: Workflow
-on: [push, pull_request]
+on: [push, pull_request, workflow_call]
 jobs:
   build:
     name: Build, Test and Upload Artifacts
@@ -38,6 +38,25 @@ jobs:
           echo ::set-output name=commit_hash::${COMMIT_HASH}
           echo ::set-output name=repo_owner::${REPO_OWNER}
           echo ::set-output name=repo_name::${REPO_NAME}
+      - name: Add Comment on Where to Test
+        uses: actions/github-script@v6
+        if: startsWith(github.repository, 'NCIOCPL') && github.event_name == 'pull_request' && github.event.action == 'opened'
+        env:
+          BUILD_NAME: ${{steps.set_vars.outputs.build_name}}
+          REPO_NAME: ${{steps.set_vars.outputs.repo_name}}
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          ## NOTE: The script below is JavaScript
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              ## Viewing Information
+              * [The testing site](https://react-app-dev.cancer.gov/${ process.env.REPO_NAME }/${ process.env.BUILD_NAME }/)
+              `
+            })
       ## This clones and checks out.
       - name: Checkout branch
         uses: actions/checkout@v2
@@ -55,6 +74,11 @@ jobs:
         env:
           CI: true
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      ## Lint Codebase
+      - name: Lint Codebase
+        run: npm run lint
+        env:
+          CI: true
       ## Runs jest unit and cypress e2e testing and merges coverage reports
       - name: Run Tests
         run: npm test
