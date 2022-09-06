@@ -22,7 +22,7 @@ describe('<FigureCgovImage /> component', () => {
 		render(<FigureCgovImage classes="mockstyle" {...mockFig} />);
 		const figure = screen.getByRole('figure');
 		expect(figure).toBeInTheDocument();
-		expect(figure.classList.contains('mockstyle')).toBeTruthy();
+		expect(figure).toHaveClass('mockstyle');
 		// There should be no caption when there is not a credit or caption
 		/* eslint-disable testing-library/no-node-access */
 		expect(figure.getElementsByTagName('figcaption')).toHaveLength(0);

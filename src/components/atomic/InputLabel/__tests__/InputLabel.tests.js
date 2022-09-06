@@ -22,9 +22,9 @@ describe('Input label', function () {
 		const label = screen.getByTestId(`tid-${htmlFor}-label`);
 		expect(label).toBeInTheDocument();
 		expect(screen.getByText(labelHint)).toBeInTheDocument();
-		expect(label).toHaveAttribute(
-			'class',
-			'ncids-label ncids-label--required ncids-label--error'
+		expect(label).toHaveClass(
+			'ncids-label ncids-label--required ncids-label--error',
+			{ exact: true }
 		);
 	});
 });
