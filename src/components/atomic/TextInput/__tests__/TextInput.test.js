@@ -17,8 +17,8 @@ const mockTextInput = {
 describe('TextInput component', function () {
 	it('TextInput renders with label, placeholder, and help text', function () {
 		render(<TextInput {...mockTextInput} />);
-		expect(screen.getByLabelText(labelText)).toBeTruthy();
-		expect(screen.getByPlaceholderText(placeholderText)).toBeTruthy();
+		expect(screen.getByLabelText(labelText)).toBeInTheDocument();
+		expect(screen.getByPlaceholderText(placeholderText)).toBeInTheDocument();
 		expect(screen.getByText(inputHelpText)).toBeInTheDocument();
 	});
 
@@ -102,8 +102,8 @@ describe('TextInput component', function () {
 			fireEvent.change(textInput, { target: { value: 'error' } });
 			const error = screen.getByTestId('tid-error');
 
-			expect(error).toBeTruthy();
-			expect(screen.getByText(errorMessage)).toBeTruthy();
+			expect(error).toBeInTheDocument();
+			expect(screen.getByText(errorMessage)).toBeInTheDocument();
 		});
 	});
 });

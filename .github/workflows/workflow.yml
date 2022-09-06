@@ -1,5 +1,5 @@
 name: Workflow
-on: [ push, pull_request ]
+on: [push, pull_request]
 jobs:
   build:
     name: Build, Test and Upload Artifacts
@@ -40,23 +40,21 @@ jobs:
           echo ::set-output name=repo_name::${REPO_NAME}
       ## This clones and checks out.
       - name: Checkout branch
-        uses: actions/checkout@v1
-      ## This installs the correct node version
-      - name: Use Node.js 12.x
-        uses: actions/setup-node@v1
+        uses: actions/checkout@v2
+      ## Setup node and npm caching.
+      - name: Setup Node
+        uses: actions/setup-node@v2
         with:
-          node-version: 12.x
-      ## Restore cache
-      - name: Restore npm cache
-        uses: actions/cache@v1
-        with:
-          path: ~/.npm
-          key: cache-${{ hashFiles('package-lock.json') }}
+          node-version: '12'
+          cache: 'npm'
+          registry-url: https://npm.pkg.github.com
+          scope: '@nciocpl'
       ## Install using CI
       - name: Install Dependencies
         run: npm ci
         env:
           CI: true
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       ## Runs jest unit and cypress e2e testing and merges coverage reports
       - name: Run Tests
         run: npm test
