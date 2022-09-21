@@ -140,7 +140,9 @@
 		]
 	},
 	"cypress-cucumber-preprocessor": {
-		"nonGlobalStepDefinitions": true
+		"nonGlobalStepDefinitions": true,
+		"stepDefinitions": "cypress/e2e",
+		"commonPath": "cypress/e2e/common"
 	},
 	"nyc": {
 		"report-dir": "coverage/cypress",
@@ -157,7 +159,7 @@
 	},
 	"devDependencies": {
 		"@babel/core": "7.9.0",
-		"@cypress/code-coverage": "^3.9.10",
+		"@cypress/code-coverage": "^3.10.0",
 		"@nciocpl/eslint-config-react": "^0.8.0",
 		"@svgr/webpack": "4.3.3",
 		"@testing-library/jest-dom": "^5.12.0",
@@ -173,8 +175,8 @@
 		"babel-plugin-named-asset-import": "^0.3.6",
 		"babel-preset-react-app": "^9.1.2",
 		"case-sensitive-paths-webpack-plugin": "2.3.0",
-		"cypress": "^5.0.0",
-		"cypress-cucumber-preprocessor": "^2.5.0",
+		"cypress": "^10.9.0",
+		"cypress-cucumber-preprocessor": "^4.3.1",
 		"eslint": "^7.20.0",
 		"eslint-loader": "^4.0.2",
 		"file-loader": "4.3.0",
