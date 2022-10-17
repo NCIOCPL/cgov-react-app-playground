@@ -200,7 +200,7 @@
 		"postcss-prefix-selector": "^1.16.0",
 		"postcss-preset-env": "6.7.0",
 		"postcss-safe-parser": "4.0.1",
-		"resolve-url-loader": "^3.1.2",
+		"resolve-url-loader": "^5.0.0",
 		"sass": "^1.54.9",
 		"sass-loader": "^10.3.1",
 		"semver": "6.3.0",
