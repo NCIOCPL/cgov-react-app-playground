@@ -1,5 +1,18 @@
 name: Workflow
-on: [push, pull_request, workflow_call]
+on:
+  push:
+    branches:
+      - master
+      - main
+      - develop
+      - 'hotfix/**'
+      - 'release/**'
+      - 'feature/**'
+      - 'prototype/**'
+    tags:
+      - '*'
+  pull_request:
+  workflow_call:
 jobs:
   build:
     name: Build, Test and Upload Artifacts
