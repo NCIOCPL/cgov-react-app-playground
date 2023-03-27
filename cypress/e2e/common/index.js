@@ -1,8 +1,6 @@
 import { And, Given, Then } from 'cypress-cucumber-preprocessor/steps';
 import { i18n } from '../../../src/utils';
 
-const baseURL = Cypress.config('baseUrl');
-
 Then('page title is {string}', (title) => {
 	cy.get('h1').should('contain', title);
 });
@@ -12,7 +10,7 @@ Then('the page title is {string}', (title) => {
 });
 
 Then('page title on error page is {string}', (title) => {
-	Cypress.on('uncaught:exception', (err, runnable) => {
+	Cypress.on('uncaught:exception', () => {
 		// returning false here to Cypress from
 		// failing the test
 		return false;
@@ -29,7 +27,7 @@ Given('the user visits the home page', () => {
 	cy.visit('/');
 });
 
-Given('the user navigates to {string}',  (destURL) => {
+Given('the user navigates to {string}', (destURL) => {
 	cy.visit(destURL);
 });
 
@@ -49,7 +47,7 @@ Given('{string} is set to {string}', (key, param) => {
     ----------------------------------------
 */
 Then('the user gets an error page that reads {string}', (errorMessage) => {
-	Cypress.on('uncaught:exception', (err, runnable) => {
+	Cypress.on('uncaught:exception', () => {
 		// returning false here to Cypress from
 		// failing the test
 		return false;
@@ -93,10 +91,10 @@ And('the following links and texts exist on the page', (dataTable) => {
     -----------------------
 */
 And('the system returns the no results found page', () => {
-
 	cy.window().then((win) => {
 		if (win.INT_TEST_APP_PARAMS) {
-			const noResultsPageTitle =  i18n.nciSearchResults[win.INT_TEST_APP_PARAMS.language];
+			const noResultsPageTitle =
+				i18n.nciSearchResults[win.INT_TEST_APP_PARAMS.language];
 			cy.get('h1').should('contain', noResultsPageTitle);
 		}
 	});

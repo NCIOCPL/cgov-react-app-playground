@@ -23,8 +23,8 @@ beforeEach(() => {
 			searchSiteFilter: 'all',
 			siteName: 'National Cancer Institute',
 			title: 'NCI Search Results',
-			contentGroup: "Global Search",
-			audience: "Patient"
+			contentGroup: 'Global Search',
+			audience: 'Patient',
 		};
 		console.log(win.INT_TEST_APP_PARAMS);
 	});
