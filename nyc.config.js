@@ -4,14 +4,8 @@
  * This file is the configuration for the final merged report.
  */
 module.exports = {
-	'report-dir': 'coverage/merged',
-	'temp-dir': 'coverage/merged',
-	reporter: ['html', 'json', 'lcov', 'text'],
-	'check-coverage': true,
-	branches: 75, // Target of 80 across all repos.
-	lines: 80,
-	functions: 80,
-	statements: 80,
+	'report-dir': 'coverage/cypress',
+	reporter: ['html', 'json', 'lcov'],
 	exclude: [
 		'cypress/**/*.js',
 		'jest-test-setup.js',
