@@ -13,14 +13,24 @@ on:
       - '*'
   pull_request:
   workflow_call:
+    inputs:
+      app_path:
+        description: Is there a path prefix for the app
+        required: false
+        type: string
+        default: "./"
 jobs:
   build:
     name: Build, Test and Upload Artifacts
     runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: ${{ format('./{0}', inputs.app_path) }}
     steps:
       ## Setup variables for build info
       - name: Set Variables
         id: set_vars
+        working-directory: "./"
         run: |
           ## PUSH
           if [ "${{ github.event_name }}" == "push" ]; then
@@ -77,10 +87,11 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: '${{ inputs.app_path }}.nvmrc'
           cache: 'npm'
           registry-url: https://npm.pkg.github.com
           scope: '@nciocpl'
+          cache-dependency-path: '**/package-lock.json'
       ## Install using CI
       - name: Install Dependencies
         run: npm ci
@@ -119,13 +130,13 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: test-results
-          path: coverage
+          path: ${{ inputs.app_path }}coverage
       ## Upload the test results artifact
       - name: Archive production artifacts
         uses: actions/upload-artifact@v1
         with:
           name: build-artifact
-          path: build
+          path: ${{ inputs.app_path }}build
   deploy-test:
     name: Deploy built artifacts to test server
     ## Only do this if the repo is NCIOCPL
