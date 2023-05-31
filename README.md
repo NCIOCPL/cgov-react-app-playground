@@ -2,17 +2,23 @@
 
 ## Table of Contents
 
-- [Development workflow](#development-wrokflow)
-- [Steps to Create a new React App Repo](#steps-to-create-a-new-react-app-repo)
-- [Folder Structure](#folder-structure)
-- [Making API Calls](#making-api-calls)
-- [Analytics for the NCI Event-Driven Data Layer (EDDL)](<#analytics-for-the-nci-event-driven-data-layer-(eddl)>)
-  - [How the react-tracker Package Works](#how-the-react-tracker-package-works)
-- [Routing](#routing)
-  - [Using useAppPaths to generate a URL](#using-useapppaths-to-generate-a-url)
-  - [Using useAppPaths to get a route](#using-useapppaths-to-get-a-route)
-- [The API Mocks](#the-api-mocks)
-  - [Adding API Mocks](#adding-api-mocks)
+- [React App "Scaffold"](#react-app-scaffold)
+	- [Table of Contents](#table-of-contents)
+	- [Development workflow](#development-workflow)
+	- [Steps to Create a new React App Repo](#steps-to-create-a-new-react-app-repo)
+	- [Folder Structure](#folder-structure)
+	- [Making API Calls](#making-api-calls)
+	- [Analytics for the NCI Event-Driven Data Layer (EDDL)](#analytics-for-the-nci-event-driven-data-layer-eddl)
+		- [How the react-tracker Package Works](#how-the-react-tracker-package-works)
+	- [Routing](#routing)
+		- [Using useAppPaths to generate a URL](#using-useapppaths-to-generate-a-url)
+		- [Using useAppPaths to get a route](#using-useapppaths-to-get-a-route)
+	- [JavaScript](#javascript)
+		- [Imports](#imports)
+		- [Linting](#linting)
+	- [Style Sheets](#style-sheets)
+	- [Naming](#naming)
+		- [Naming Methodologies](#naming-methodologies)
 
 ## Development workflow
 
@@ -30,7 +36,7 @@ You must create you ticket branches off the NCIOCPL repo such that secrets are u
    - `cypress/integration/common/beforeEach.js` - modify this object to include the defaults for integration tests that should be passed to initialize.
    - `public/index.html` - Update the `const cfgs = [...]` block to set the initialize options for the apps. Modify `<select id="jm1" class="jumpmenu">` to set the dropdown name for the configuration.
      _ Modify `package.json` to set the `name`, `version`, `repository.url`, `bugs.url` to this repos values.
-     _ Run `` to update the lock. \* modify the `appPaths` constant in `src/hooks/routing` to setup all the routes for your app. See [Routing](#routing).
+     _ Run ``to update the lock. \* modify the`appPaths`constant in`src/hooks/routing` to setup all the routes for your app. See [Routing](#routing).
 5. Remove any components from `src/components/atomic` and `src/components/molecules` that are not needed. (For example if you don't have videos, remove the youtube-video-player)
 6. Go to the NCIOCPL Organization Secrets and add permissions to the new repository for these secrets:
    - ...
