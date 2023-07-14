@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTracking } from 'react-tracking';
 
-import TextInput from '../../components/atomic/TextInput';
 import { useStateValue } from '../../store/store';
 import { i18n } from '../../utils';
 
@@ -78,15 +77,50 @@ const PageNotFound = () => {
 	return (
 		<>
 			{renderHelmet()}
-			<div className="error-container">
-				<h1>{i18n.pageNotFoundTitle[language]}</h1>
-				<>
-					{contentPar.map((content, index) => (
-						<p key={index}>{content}</p>
-					))}
-				</>
+			<div className="error-page">
+				<div className="error-content-english">
+					<h1>{i18n.pageNotFoundTitle[language]}</h1>
+					<>
+						{contentPar.map((content, index) => (
+							<p key={index}>{content}</p>
+						))}
+					</>
+				</div>
 				<div className="error-searchbar">
-					<TextInput
+					<div id="error-form">
+						<form
+							action="/search/results"
+							method="get"
+							id="pageNotFoundSearchForm"
+							name="pageNotFoundSearchForm"
+							data-language="en">
+							<label className="show-for-sr" htmlFor="nfKeyword">
+								{i18n.search[language]}
+							</label>
+							<input
+								className="searchString ui-autocomplete-input"
+								id="nfKeyword"
+								maxLength="255"
+								name="swKeyword"
+								onBlur="bSearchBoxBool=false;"
+								onChange={updateTextInput}
+								onFocus="bSearchBoxBool=true;"
+								value=""
+								autoComplete="off"
+								aria-autocomplete="list"
+								aria-haspopup="true"
+								type="text"
+							/>
+							<button
+								className="searchSubmit"
+								id="nf-search__button"
+								type="submit"
+								onClick={executeSearch}>
+								{i18n.search[language]}
+							</button>
+						</form>
+					</div>
+					{/*<TextInput
 						id="keywords"
 						action={updateTextInput}
 						classes="searchString"
@@ -100,7 +134,7 @@ const PageNotFound = () => {
 						title={i18n.search[language]}
 						value={i18n.search[language]}
 						onClick={executeSearch}
-					/>
+					/>*/}
 				</div>
 			</div>
 		</>

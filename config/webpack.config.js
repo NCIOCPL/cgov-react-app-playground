@@ -24,7 +24,7 @@ const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 
-const postcssNormalize = require('postcss-normalize');
+// const postcssNormalize = require('postcss-normalize');
 
 const appPackageJson = require(paths.appPackageJson);
 
@@ -34,7 +34,7 @@ const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 // makes for a smoother build process.
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
 
-const isExtendingEslintConfig = process.env.EXTEND_ESLINT === 'true';
+// const isExtendingEslintConfig = process.env.EXTEND_ESLINT === 'true';
 
 const imageInlineSizeLimit = parseInt(
 	process.env.IMAGE_INLINE_SIZE_LIMIT || '10000'
@@ -83,7 +83,6 @@ module.exports = function (webpackEnv) {
 				options: cssOptions,
 			},
 			{
-
 				// Options for PostCSS as we reference these options twice
 				// Adds vendor prefixing based on your specified browser support in
 				// package.json
@@ -108,49 +107,25 @@ module.exports = function (webpackEnv) {
 					sourceMap: isEnvProduction && shouldUseSourceMap,
 				},
 			},
-			/**
-			 * NCIDS CSS requires compiling your Sass with load paths using
-			 * dart-sass. Load paths must include a path to the `/packages`
-			 * directory for NCIDS packages and `/uswds-packages` for USWDS
-			 * packages.
-			 *
-			 * https://sass-lang.com/documentation/at-rules/use#load-paths
-			 */
-			// {
-			// 	loader: require.resolve('sass-loader'),
-			// 	options: {
-			// 		sassOptions: {
-			// 			includePaths: [
-			// 				path.join(
-			// 					__dirname,
-			// 					'../node_modules/@nciocpl/ncids-css/packages'
-			// 				),
-			// 				path.join(
-			// 					__dirname,
-			// 					'../node_modules/@nciocpl/ncids-css/uswds-packages'
-			// 				),
-			// 			],
-			// 		},
-			// 		sourceMap: true,
-			// 	},
-			// },
 		].filter(Boolean);
 		if (preProcessor) {
-			const processorOpts = preProcessor === 'sass-loader' ?
-				{
-					sassOptions: {
-						includePaths: [
-							path.join(
-								__dirname,
-								'../node_modules/@nciocpl/ncids-css/packages'
-							),
-							path.join(
-								__dirname,
-								'../node_modules/@nciocpl/ncids-css/uswds-packages'
-							),
-						],
-					},
-				} : {};
+			const processorOpts =
+				preProcessor === 'sass-loader'
+					? {
+							sassOptions: {
+								includePaths: [
+									path.join(
+										__dirname,
+										'../node_modules/@nciocpl/ncids-css/packages'
+									),
+									path.join(
+										__dirname,
+										'../node_modules/@nciocpl/ncids-css/uswds-packages'
+									),
+								],
+							},
+					  }
+					: {};
 			loaders.push(
 				// {
 				// 	loader: require.resolve('resolve-url-loader'),
@@ -200,7 +175,7 @@ module.exports = function (webpackEnv) {
 			// We include the app code last so that if there is a runtime error during
 			// initialization, it doesn't blow up the WebpackDevServer client, and
 			// changing JS code would still trigger a refresh.
-			path.join(__dirname, '../src/styleLoader.js')
+			path.join(__dirname, '../src/digitalPlatformMockWrapper.js'),
 		].filter(Boolean),
 		output: {
 			// The build folder.
@@ -309,19 +284,6 @@ module.exports = function (webpackEnv) {
 					},
 				}),
 			],
-			// Automatically split vendor and commons
-			// https://twitter.com/wSokra/status/969633336732905474
-			// https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
-			/*splitChunks: {
-        chunks: 'all',
-        name: false,
-      },*/
-			// Keep the runtime chunk separated to enable long term caching
-			// https://twitter.com/wSokra/status/969679223278505985
-			// https://github.com/facebook/create-react-app/issues/5358
-			/*runtimeChunk: {
-        name: entrypoint => `runtime-${entrypoint.name}`,
-      },*/
 		},
 		resolve: {
 			// This allows you to set a fallback for where webpack should look for modules.
@@ -395,31 +357,6 @@ module.exports = function (webpackEnv) {
 					include: paths.appSrc,
 					exclude: paths.appExcludeFromBuild,
 				},
-
-				// {test: /\.s[ac]ss$/i,
-        // use: [
-        //   "style-loader",
-        //   "css-loader",
-        //   {
-        //     loader: "sass-loader",
-        //     options: {
-				// 			sassOptions: {
-				// 				includePaths: [
-				// 					path.join(
-				// 						__dirname,
-				// 						'../node_modules/@nciocpl/ncids-css/packages'
-				// 					),
-				// 					path.join(
-				// 						__dirname,
-				// 						'../node_modules/@nciocpl/ncids-css/uswds-packages'
-				// 					),
-				// 				],
-				// 			},
-        //     },
-        //   },
-        // ],},
-
-
 				{
 					// "oneOf" will traverse all following loaders until one will
 					// match the requirements. When no loader matches it will fall
@@ -435,6 +372,26 @@ module.exports = function (webpackEnv) {
 								limit: imageInlineSizeLimit,
 								name: 'static/media/[name].[ext]',
 							},
+						},
+						// NCIDS/USWDS Sprites (assume other svgs that actually exist)
+						{
+							test: /\.svg$/,
+							// Temporarily let's inline these things.
+							use: [
+								{
+									loader: require.resolve('url-loader'),
+									options: {
+										limit: imageInlineSizeLimit,
+										//mimetype: 'svg+xml',
+									},
+								},
+							],
+							include: [
+								path.join(
+									__dirname,
+									'../node_modules/@nciocpl/ncids-css/uswds-img'
+								),
+							],
 						},
 						// Process application JS with Babel.
 						// The preset includes JSX, Flow, TypeScript, and some ESnext features.
@@ -484,7 +441,7 @@ module.exports = function (webpackEnv) {
 								compact: isEnvProduction,
 							},
 						},
-						// Process any JS outside of the app with Babel.
+						// Process any JS outside the app with Babel.
 						// Unlike the application JS, we only compile the standard ES features.
 						{
 							test: /\.(js|mjs)$/,
@@ -555,8 +512,8 @@ module.exports = function (webpackEnv) {
 									sourceMap: isEnvProduction && shouldUseSourceMap,
 									url: (url, resourcePath) => {
 										console.log(`URL: ${url} at ${resourcePath}`);
-										return false;
-									}
+										return true;
+									},
 								},
 								'sass-loader'
 							),
@@ -599,19 +556,6 @@ module.exports = function (webpackEnv) {
 						},
 						// ** STOP ** Are you adding a new loader?
 						// Make sure to add the new loader(s) before the "file" loader.
-					],
-				},
-				// NCIDS/USWDS Sprites (assume other svgs that actually exist)
-				{
-					test: /\.svg$/,
-					// Temporarily let's inline these things.
-					use: [
-						{
-							loader: 'url-loader',
-							options: {
-								limit: 8192,
-							},
-						},
 					],
 				},
 			],
