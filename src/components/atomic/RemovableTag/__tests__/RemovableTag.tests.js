@@ -4,21 +4,41 @@ import React from 'react';
 import RemovableTag from '../RemovableTag';
 
 describe('RemovableTag component', () => {
-	it('should have expected button label and fire onRemove handler', () => {
-		const key = 'test-id';
-		const label = 'Mock Label';
-		const onRemove = jest.fn();
-		render(<RemovableTag key={key} label={label} onRemove={onRemove} />);
-		const tagLabel = screen.queryByTestId('.cts-removable-tag__label');
+	const label = 'Mock Label';
+
+	it('should render without crashing', () => {
+		render(<RemovableTag label={label} />);
 		expect(screen.queryByTestId('.cts-removable-tag')).toBeInTheDocument();
-		expect(
-			screen.queryByTestId('.cts-removable-tag__button')
-		).toBeInTheDocument();
+	});
+
+	it('should display correct tag label', () => {
+		render(<RemovableTag label={label} />);
+		const tagLabel = screen.queryByTestId('.cts-removable-tag__label');
 		expect(tagLabel).toHaveTextContent(label);
-		expect(tagLabel).toBeInTheDocument();
+	});
+
+	it('should have a button with correct aria-label and value', () => {
+		render(<RemovableTag label={label} />);
 		const tagButton = screen.getByRole('button');
+		expect(tagButton).toHaveAttribute('aria-label', `remove ${label}`);
 		expect(tagButton.value).toEqual(label);
+	});
+
+	it('should fire the onRemove handler when button is clicked', () => {
+		const onRemove = jest.fn();
+		render(<RemovableTag label={label} onRemove={onRemove} />);
+		const tagButton = screen.getByRole('button');
 		fireEvent.click(tagButton);
-		expect(onRemove).toHaveBeenCalled();
+		expect(onRemove).toHaveBeenCalledWith({ label });
+	});
+
+	// This is to ensure that the default no-op onRemove is provided
+	// and doesn't throw an error when invoked.
+	it('should not throw an error when onRemove is not provided and button is clicked', () => {
+		render(<RemovableTag label={label} />);
+		const tagButton = screen.getByRole('button');
+		expect(() => {
+			fireEvent.click(tagButton);
+		}).not.toThrow();
 	});
 });

@@ -1,7 +1,7 @@
 export const getSampleCallResults = ({ id }) => {
 	return {
-		interceptorName: 'sampleApi',
+		interceptorName: 'sampleAPI',
 		method: 'GET',
-		endpoint: `{{API_ENDPOINT}}/sampleendpoint/${id}`,
+		endpoint: `{{API_ENDPOINT}}sampleendpoint/${id}`,
 	};
 };

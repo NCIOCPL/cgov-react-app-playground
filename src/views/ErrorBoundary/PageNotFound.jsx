@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTracking } from 'react-tracking';
 
-import TextInput from '../../components/atomic/TextInput';
 import { useStateValue } from '../../store/store';
 import { i18n } from '../../utils';
 
@@ -78,29 +77,26 @@ const PageNotFound = () => {
 	return (
 		<>
 			{renderHelmet()}
-			<div className="error-container">
+			<div>
 				<h1>{i18n.pageNotFoundTitle[language]}</h1>
 				<>
 					{contentPar.map((content, index) => (
 						<p key={index}>{content}</p>
 					))}
 				</>
-				<div className="error-searchbar">
-					<TextInput
-						id="keywords"
-						action={updateTextInput}
-						classes="searchString"
-						label={i18n.search[language]}
-						labelHidden
-					/>
+				<div className="rap-error-searchbar">
+					<label className="usa-label usa-sr-only" id="input-type-text">
+						{i18n.search[language]}
+					</label>
 					<input
-						type="submit"
-						className="submit button postfix"
-						id="btnSearch"
-						title={i18n.search[language]}
-						value={i18n.search[language]}
-						onClick={executeSearch}
+						className="usa-input usa-input--inline"
+						id="keywords"
+						aria-labelledby="input-type-text"
+						onChange={updateTextInput}
 					/>
+					<button className="usa-button" onClick={executeSearch}>
+						{i18n.search[language]}
+					</button>
 				</div>
 			</div>
 		</>
