@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { useTracking } from 'react-tracking';
 
+import { Button } from '@nciocpl/ncids-react';
+
 import { useAppPaths } from '../../hooks';
 import { useStateValue } from '../../store/store.js';
 
@@ -105,6 +107,8 @@ const Home = () => {
 					home view with a bunch of other views.
 				</p>
 				<h3>3 examples of links</h3>
+				<Button label="Test" variant="outline"></Button>
+
 				<ul>
 					<li>
 						<Link
@@ -128,11 +132,12 @@ const Home = () => {
 						</Link>
 					</li>
 					<li>
-						<Link to="/chicken" onClick={handleItemClick}>
+						<Link to={`${HomePath()}chicken`} onClick={handleItemClick}>
 							Non-existent Page
 						</Link>
 					</li>
 				</ul>
+				<button className="usa-button">Default</button>
 			</div>
 		</>
 	);

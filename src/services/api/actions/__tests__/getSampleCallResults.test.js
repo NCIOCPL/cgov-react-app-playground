@@ -7,9 +7,9 @@ describe('getSampleCallResults action', () => {
 	it(`should match getSampleCallResults action for id "6789"`, () => {
 		const id = '6789';
 		const retAction = {
-			interceptorName: 'sampleApi',
+			interceptorName: 'sampleAPI',
 			method: 'GET',
-			endpoint: `{{API_ENDPOINT}}/sampleendpoint/${id}`,
+			endpoint: `{{API_ENDPOINT}}sampleendpoint/${id}`,
 		};
 		expect(getSampleCallResults({ id })).toEqual(retAction);
 	});

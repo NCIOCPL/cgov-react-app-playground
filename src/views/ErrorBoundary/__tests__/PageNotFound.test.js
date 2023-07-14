@@ -30,9 +30,12 @@ describe('PageNotFound component', () => {
 
 		const expectedPageTitle = 'Page Not Found';
 		expect(screen.getByText(expectedPageTitle)).toBeInTheDocument();
-		const inputBox = screen.getByLabelText('Search');
-		fireEvent.change(inputBox, { target: { value: 'chicken' } });
-		fireEvent.click(screen.getByText('Search'));
+		const searchBox = screen.getAllByLabelText('Search', {
+			selector: 'input',
+		});
+		const searchButton = screen.getByRole('button', { name: 'Search' });
+		fireEvent.change(searchBox[0], { target: { value: 'chicken' } });
+		fireEvent.click(searchButton);
 	});
 
 	it('should show error page title ( Espanol )', async () => {
@@ -57,8 +60,11 @@ describe('PageNotFound component', () => {
 
 		const expectedPageTitle = 'No se encontró la página';
 		expect(screen.getByText(expectedPageTitle)).toBeInTheDocument();
-		const inputBox = screen.getByLabelText('Buscar');
-		fireEvent.change(inputBox, { target: { value: 'pollo' } });
-		fireEvent.click(screen.getByText('Buscar'));
+		const searchBox = screen.getAllByLabelText('Buscar', {
+			selector: 'input',
+		});
+		const searchButton = screen.getByRole('button', { name: 'Buscar' });
+		fireEvent.change(searchBox[0], { target: { value: 'pollo' } });
+		fireEvent.click(searchButton);
 	});
 });

@@ -33,17 +33,17 @@ const getSampleApiSampleEndpoint = async (req, res, next) => {
 	// This is custom code and is not something easily mocked up.
 
 	// IMPLEMENTOR NOTE: Always good to integration test 500 errors with your app
-	if ( id === 'server-error') {
+	if (id === 'server-error') {
 		res.status(500).end();
 	}
 
 	// IMPLEMENTOR NOTE: Always good to integration test 404 errors with your app
-	if ( id === 'not-found') {
+	if (id === 'not-found') {
 		res.status(404).end();
 	}
 
 	// IMPLEMENTOR NOTE: Always good to integration test 400 errors with your app
-	if ( id === 'bad-request') {
+	if (id === 'bad-request') {
 		res.status(400).end();
 	}
 
