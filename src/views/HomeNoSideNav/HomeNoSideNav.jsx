@@ -6,9 +6,9 @@ import { useTracking } from 'react-tracking';
 import { useAppPaths } from '../../hooks';
 import { useStateValue } from '../../store/store.js';
 
-const Home = () => {
+const HomeNoSideNav = () => {
 	// Pull in the paths we are going to need on this view.
-	const { HomePath, ItemDetailsPath } = useAppPaths();
+	const { HomeNoSideNavPath, ItemDetailsPath } = useAppPaths();
 
 	// Get items passed into index.js and stored in the context.
 	const [
@@ -24,8 +24,8 @@ const Home = () => {
 	tracking.trackEvent({
 		// These properties are required.
 		type: 'PageLoad',
-		event: 'PlaygroundApp:Load:Home',
-		name: canonicalHost.replace('https://', '') + HomePath(),
+		event: 'PlaygroundApp:Load:HomeNoSideNav',
+		name: canonicalHost.replace('https://', '') + HomeNoSideNavPath(),
 		title: title,
 		metaTitle: `${title} - ${siteName}`,
 		// Any additional properties fall into the "page.additionalDetails" bucket
@@ -46,7 +46,7 @@ const Home = () => {
 				key="1"
 				rel="alternate"
 				hrefLang={language}
-				href={canonicalHost + HomePath()}
+				href={canonicalHost + HomeNoSideNavPath()}
 			/>,
 			<link
 				key="2"
@@ -55,7 +55,7 @@ const Home = () => {
 				// support multiple languages. (Well, the alternate
 				// language dictionary base path does not either... )
 				hrefLang={language === 'es' ? 'en' : 'es'}
-				href={canonicalHost + altLanguageBasePath + HomePath()}
+				href={canonicalHost + altLanguageBasePath + HomeNoSideNavPath()}
 			/>,
 		];
 	};
@@ -64,14 +64,14 @@ const Home = () => {
 	 * Helper function to render metadata.
 	 */
 	const renderHelmet = () => {
-		// Home is indexable, expand and search are not.
+		// HomeNoSideNav is indexable, expand and search are not.
 
 		return (
 			<Helmet>
 				<title>{`${title} - ${siteName}`}</title>
 				<meta property="og:title" content={`${title}`} />
-				<meta property="og:url" content={baseHost + HomePath()} />
-				<link rel="canonical" href={canonicalHost + HomePath()} />
+				<meta property="og:url" content={baseHost + HomeNoSideNavPath()} />
+				<link rel="canonical" href={canonicalHost + HomeNoSideNavPath()} />
 				<meta name="robots" content="index" />
 				{getHrefLangs()}
 			</Helmet>
@@ -98,11 +98,11 @@ const Home = () => {
 			{renderHelmet()}
 			<h1>{title}</h1>
 			<div>
-				<p>This is the home view.</p>
+				<p>This is the HomeNoSideNav view.</p>
 				<p>
-					It can be whatever you like, you don&apos;t even actually need a home
-					view, but most of our apps have something. Please do not overload the
-					home view with a bunch of other views.
+					It can be whatever you like, you don&apos;t even actually need a
+					HomeNoSideNav view, but most of our apps have something. Please do not
+					overload the HomeNoSideNav view with a bunch of other views.
 				</p>
 				<h3>3 examples of links</h3>
 				<ul>
@@ -139,4 +139,4 @@ const Home = () => {
 	);
 };
 
-export default Home;
+export default HomeNoSideNav;

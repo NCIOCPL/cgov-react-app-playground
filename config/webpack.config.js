@@ -83,6 +83,7 @@ module.exports = function (webpackEnv) {
 				options: cssOptions,
 			},
 			{
+
 				// Options for PostCSS as we reference these options twice
 				// Adds vendor prefixing based on your specified browser support in
 				// package.json
@@ -90,36 +91,78 @@ module.exports = function (webpackEnv) {
 				options: {
 					// Necessary for external CSS imports to work
 					// https://github.com/facebook/create-react-app/issues/2677
-					ident: 'postcss',
-					plugins: () => [
-						require('postcss-flexbugs-fixes'),
-						require('postcss-preset-env')({
-							autoprefixer: {
-								flexbox: 'no-2009',
-							},
-							stage: 3,
-						}),
-						// Adds PostCSS Normalize as the reset css with default options,
-						// so that it honors browserslist config in package.json
-						// which in turn let's users customize the target behavior as per their needs.
-						postcssNormalize(),
-					],
+					// ident: 'postcss',
+					// plugins: () => [
+					// 	require('postcss-flexbugs-fixes'),
+					// 	require('postcss-preset-env')({
+					// 		autoprefixer: {
+					// 			flexbox: 'no-2009',
+					// 		},
+					// 		stage: 3,
+					// 	}),
+					// 	// Adds PostCSS Normalize as the reset css with default options,
+					// 	// so that it honors browserslist config in package.json
+					// 	// which in turn let's users customize the target behavior as per their needs.
+					// 	postcssNormalize(),
+					// ],
 					sourceMap: isEnvProduction && shouldUseSourceMap,
 				},
 			},
+			/**
+			 * NCIDS CSS requires compiling your Sass with load paths using
+			 * dart-sass. Load paths must include a path to the `/packages`
+			 * directory for NCIDS packages and `/uswds-packages` for USWDS
+			 * packages.
+			 *
+			 * https://sass-lang.com/documentation/at-rules/use#load-paths
+			 */
+			// {
+			// 	loader: require.resolve('sass-loader'),
+			// 	options: {
+			// 		sassOptions: {
+			// 			includePaths: [
+			// 				path.join(
+			// 					__dirname,
+			// 					'../node_modules/@nciocpl/ncids-css/packages'
+			// 				),
+			// 				path.join(
+			// 					__dirname,
+			// 					'../node_modules/@nciocpl/ncids-css/uswds-packages'
+			// 				),
+			// 			],
+			// 		},
+			// 		sourceMap: true,
+			// 	},
+			// },
 		].filter(Boolean);
 		if (preProcessor) {
-			loaders.push(
+			const processorOpts = preProcessor === 'sass-loader' ?
 				{
-					loader: require.resolve('resolve-url-loader'),
-					options: {
-						sourceMap: isEnvProduction && shouldUseSourceMap,
+					sassOptions: {
+						includePaths: [
+							path.join(
+								__dirname,
+								'../node_modules/@nciocpl/ncids-css/packages'
+							),
+							path.join(
+								__dirname,
+								'../node_modules/@nciocpl/ncids-css/uswds-packages'
+							),
+						],
 					},
-				},
+				} : {};
+			loaders.push(
+				// {
+				// 	loader: require.resolve('resolve-url-loader'),
+				// 	options: {
+				// 		sourceMap: isEnvProduction && shouldUseSourceMap,
+				// 	},
+				// },
 				{
 					loader: require.resolve(preProcessor),
 					options: {
 						sourceMap: true,
+						...processorOpts,
 					},
 				}
 			);
@@ -157,6 +200,7 @@ module.exports = function (webpackEnv) {
 			// We include the app code last so that if there is a runtime error during
 			// initialization, it doesn't blow up the WebpackDevServer client, and
 			// changing JS code would still trigger a refresh.
+			path.join(__dirname, '../src/styleLoader.js')
 		].filter(Boolean),
 		output: {
 			// The build folder.
@@ -351,6 +395,31 @@ module.exports = function (webpackEnv) {
 					include: paths.appSrc,
 					exclude: paths.appExcludeFromBuild,
 				},
+
+				// {test: /\.s[ac]ss$/i,
+        // use: [
+        //   "style-loader",
+        //   "css-loader",
+        //   {
+        //     loader: "sass-loader",
+        //     options: {
+				// 			sassOptions: {
+				// 				includePaths: [
+				// 					path.join(
+				// 						__dirname,
+				// 						'../node_modules/@nciocpl/ncids-css/packages'
+				// 					),
+				// 					path.join(
+				// 						__dirname,
+				// 						'../node_modules/@nciocpl/ncids-css/uswds-packages'
+				// 					),
+				// 				],
+				// 			},
+        //     },
+        //   },
+        // ],},
+
+
 				{
 					// "oneOf" will traverse all following loaders until one will
 					// match the requirements. When no loader matches it will fall
@@ -484,6 +553,10 @@ module.exports = function (webpackEnv) {
 								{
 									importLoaders: 3,
 									sourceMap: isEnvProduction && shouldUseSourceMap,
+									url: (url, resourcePath) => {
+										console.log(`URL: ${url} at ${resourcePath}`);
+										return false;
+									}
 								},
 								'sass-loader'
 							),
@@ -526,6 +599,19 @@ module.exports = function (webpackEnv) {
 						},
 						// ** STOP ** Are you adding a new loader?
 						// Make sure to add the new loader(s) before the "file" loader.
+					],
+				},
+				// NCIDS/USWDS Sprites (assume other svgs that actually exist)
+				{
+					test: /\.svg$/,
+					// Temporarily let's inline these things.
+					use: [
+						{
+							loader: 'url-loader',
+							options: {
+								limit: 8192,
+							},
+						},
 					],
 				},
 			],

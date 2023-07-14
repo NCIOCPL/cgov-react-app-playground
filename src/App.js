@@ -5,17 +5,18 @@ import track from 'react-tracking';
 import './styles/app.scss';
 
 import { useAppPaths } from './hooks';
-import { Home, ItemDetails, PageNotFound } from './views';
+import { Home, HomeNoSideNav, ItemDetails, PageNotFound } from './views';
 
 const App = () => {
 	// this should be a DUMB component that just displays our display(group) components
-	const { HomePath, ItemDetailsPath } = useAppPaths();
+	const { HomePath, HomeNoSideNavPath, ItemDetailsPath } = useAppPaths();
 
 	return (
 		<Router>
 			<Routes>
 				<Route path={HomePath()} element={<Home />} />
 				<Route path={ItemDetailsPath()} element={<ItemDetails />} />
+				<Route path={HomeNoSideNavPath()} element={<HomeNoSideNav />} />
 				<Route path="/*" element={<PageNotFound />} />
 			</Routes>
 		</Router>

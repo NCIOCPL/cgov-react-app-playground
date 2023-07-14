@@ -1,4 +1,4 @@
-export { default } from './Home';
+export { default } from './HomeNoSideNav';
 
 // // Import component
 // import { NCIBigFooter } from '@nciocpl/ncids-js';
