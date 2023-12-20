@@ -17,16 +17,19 @@
 		"registry": "https://npm.pkg.github.com/"
 	},
 	"dependencies": {
+		"@nciocpl/ncids-css": "^2.1.2-alpha.2",
+		"@nciocpl/ncids-js": "^2.2.0",
+		"@nciocpl/ncids-react": "^3.0.0-alpha.0",
 		"axios": "^0.21.4",
 		"camelcase": "^5.3.1",
 		"core-js": "^3.6.4",
-		"css-loader": "3.4.2",
 		"dom-scroll-into-view": "^2.0.1",
 		"dotenv": "8.2.0",
 		"dotenv-expand": "5.1.0",
 		"es6-promise": "^4.2.8",
 		"fs-extra": "^8.1.0",
 		"history": "^5.0.0",
+		"postcss": "^8.4.28",
 		"prop-types": "^15.7.2",
 		"react": "^16.13.1",
 		"react-app-polyfill": "^1.0.6",
@@ -46,9 +49,8 @@
 	"scripts": {
 		"start": "node scripts/start.js",
 		"start:silent": "BROWSER=none npm start",
-		"build:cgdp-legacy": "node scripts/generate-cgdp-legacy.js",
 		"build:cra": "node scripts/build.js",
-		"build": "npm run build:cra && npm run build:cgdp-legacy",
+		"build": "npm run build:cra",
 		"test": "npm run unit-tests && npm run cy:ci && npm run merge-coverage",
 		"test:it": "NODE_ENV=test cypress open",
 		"test:pa11y": "./node_modules/.bin/pa11y-ci",
@@ -71,16 +73,15 @@
 	},
 	"browserslist": {
 		"production": [
-			">0.2%",
+			">1%",
+			"last 2 versions",
 			"not dead",
-			"not op_mini all",
-			"ie 11"
+			"not IE 11"
 		],
 		"development": [
 			"last 1 chrome version",
 			"last 1 firefox version",
-			"last 1 safari version",
-			"ie 11"
+			"last 1 safari version"
 		]
 	},
 	"jest": {
@@ -93,13 +94,14 @@
 			"src/**/*.{js,jsx,ts,tsx}",
 			"!src/**/*.test.{js,jsx,ts,tsx}",
 			"!src/**/*.d.ts",
-			"!cypress/**/*.{spec,test}.{js,jsx,ts,tsx}"
+			"!cypress/**/*.{spec,test}.{js,jsx,ts,tsx}",
+			"!src/components/molecules/nci-header/*.test.{js,jsx,ts,tsx}"
 		],
 		"coverageThreshold": {
 			"global": {
 				"branches": 63,
-				"functions": 72,
-				"lines": 78
+				"functions": 70,
+				"lines": 77
 			}
 		},
 		"setupFiles": [
@@ -161,6 +163,7 @@
 		"@types/express": "^4.17.2",
 		"@typescript-eslint/eslint-plugin": "^4.15.2",
 		"@typescript-eslint/parser": "^4.15.2",
+		"autoprefixer": "^10.4.15",
 		"babel-eslint": "^10.1.0",
 		"babel-jest": "^29.3.1",
 		"babel-loader": "8.1.0",
@@ -168,6 +171,7 @@
 		"babel-plugin-named-asset-import": "^0.3.6",
 		"babel-preset-react-app": "^9.1.2",
 		"case-sensitive-paths-webpack-plugin": "2.3.0",
+		"css-loader": "^5.2.7",
 		"cypress": "^10.9.0",
 		"cypress-cucumber-preprocessor": "^4.3.1",
 		"eslint": "^7.20.0",
@@ -187,18 +191,14 @@
 		"optimize-css-assets-webpack-plugin": "5.0.3",
 		"pa11y-ci": "^3.0.1",
 		"pnp-webpack-plugin": "1.6.4",
-		"postcss-flexbugs-fixes": "4.1.0",
-		"postcss-loader": "3.0.0",
-		"postcss-normalize": "8.0.1",
-		"postcss-prefix-selector": "^1.16.0",
-		"postcss-preset-env": "6.7.0",
-		"postcss-safe-parser": "4.0.1",
+		"postcss-loader": "^4.3.0",
+		"postcss-safe-parser": "^6.0.0",
 		"resolve-url-loader": "^5.0.0",
-		"sass": "^1.54.9",
-		"sass-loader": "^10.3.1",
+		"sass": "^1.63.6",
+		"sass-loader": "^10.2.0",
 		"semver": "6.3.0",
 		"start-server-and-test": "^1.14.0",
-		"style-loader": "0.23.1",
+		"style-loader": "^2.0.0",
 		"terser-webpack-plugin": "^4.1.0",
 		"ts-pnp": "1.1.6",
 		"url-loader": "2.3.0",

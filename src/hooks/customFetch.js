@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-fetching-library';
 
-export const useCustomQuery = (action, shouldFetch = true) => {
+export let useCustomQuery = (action, shouldFetch = true) => {
 	const [error, setError] = useState(null);
 	const response = useQuery(action, shouldFetch);
 
