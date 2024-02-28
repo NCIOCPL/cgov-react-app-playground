@@ -41,11 +41,11 @@ describe('SPager(English)', () => {
 				/>
 			</MemoryRouter>
 		);
-		expect(screen.getAllByRole('navigation')[0]).toBeInTheDocument();
-		expect(screen.queryAllByText(/1/)[0]).toBeInTheDocument();
-		expect(screen.queryAllByText(/2/)[0]).toBeInTheDocument();
-		expect(screen.queryAllByText(/.../)[0]).toBeInTheDocument();
-		expect(screen.queryAllByText(/Next/)[0]).toBeInTheDocument();
+		expect(screen.getByRole('navigation')).toBeInTheDocument();
+		expect(screen.getByText('1')).toBeInTheDocument();
+		expect(screen.getByText('2')).toBeInTheDocument();
+		expect(screen.getByText('...')).toBeInTheDocument();
+		expect(screen.getByText(/Next/)).toBeInTheDocument();
 	});
 	// counter 2
 	it('Nav element is there and link options', () => {
@@ -90,5 +90,56 @@ describe('SPager(English)', () => {
 			'href',
 			'?swKeyword=tumor&page=1&pageunit=20'
 		);
+	});
+
+	// Test when current page is 1
+	it('should not render previous button when current page is 1', () => {
+		render(
+			<MemoryRouter initialEntries={['/?swKeyword=tumor']}>
+				<Pager
+					current={1}
+					totalResults={200}
+					resultsPerPage={20}
+					language={'en'}
+					keyword={'tumor'}
+				/>
+			</MemoryRouter>
+		);
+		expect(screen.queryByText(/< Previous/)).not.toBeInTheDocument();
+	});
+
+	// Test when current page is the last page
+	it('should not render next button when current page is the last page', () => {
+		render(
+			<MemoryRouter initialEntries={['/?swKeyword=tumor']}>
+				<Pager
+					current={10}
+					totalResults={200}
+					resultsPerPage={20}
+					language={'en'}
+					keyword={'tumor'}
+				/>
+			</MemoryRouter>
+		);
+		expect(screen.queryByText(/Next >/)).not.toBeInTheDocument();
+	});
+
+	// Test when there is only one page
+	it('should only render one page button when there is only one page', () => {
+		render(
+			<MemoryRouter initialEntries={['/?swKeyword=tumor']}>
+				<Pager
+					current={1}
+					totalResults={20}
+					resultsPerPage={20}
+					language={'en'}
+					keyword={'tumor'}
+				/>
+			</MemoryRouter>
+		);
+		expect(screen.queryAllByRole('listitem')).toHaveLength(1);
+		expect(screen.getByText('1')).toBeInTheDocument();
+		expect(screen.queryByText(/< Previous/)).not.toBeInTheDocument();
+		expect(screen.queryByText(/Next >/)).not.toBeInTheDocument();
 	});
 });
