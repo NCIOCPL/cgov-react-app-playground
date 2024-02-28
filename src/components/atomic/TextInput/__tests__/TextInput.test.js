@@ -30,6 +30,61 @@ describe('TextInput component', function () {
 		expect(screen.getByDisplayValue(expectedText).value).toBe(expectedText);
 	});
 
+	// Test for 'required' prop
+	it('should render a required input field when required prop is true', () => {
+		render(<TextInput {...mockTextInput} required />);
+		const input = screen.getByLabelText(labelText);
+		expect(input).toBeRequired();
+	});
+
+	// Test for 'disabled' prop
+	it('should render a disabled input field when disabled prop is true', () => {
+		render(<TextInput {...mockTextInput} disabled />);
+		const input = screen.getByLabelText(labelText);
+		expect(input).toBeDisabled();
+	});
+
+	// Test for 'type' prop
+	it('should render an input field with correct type', () => {
+		render(<TextInput {...mockTextInput} type="email" />);
+		const input = screen.getByLabelText(labelText);
+		expect(input).toHaveAttribute('type', 'email');
+	});
+
+	// Test for 'value' prop
+	it('should render an input field with a default value', () => {
+		const value = 'default value';
+		render(<TextInput {...mockTextInput} value={value} />);
+		const input = screen.getByDisplayValue(value);
+		expect(input.value).toBe(value);
+	});
+
+	// Test for 'allowedChars' prop
+	it('should prevent input of disallowed characters', () => {
+		const allowedChars = {
+			isValid: (input) => input.match(/^[a-zA-Z]$/),
+		};
+		render(<TextInput {...mockTextInput} allowedChars={allowedChars} />);
+		const input = screen.getByPlaceholderText(placeholderText);
+		fireEvent.change(input, { target: { value: '1' } });
+		expect(input.value).toBe('');
+		fireEvent.change(input, { target: { value: 'a' } });
+		expect(input.value).toBe('a');
+	});
+
+	// Test for 'labelHidden' prop
+	it('should hide label when labelHidden prop is true', () => {
+		render(<TextInput {...mockTextInput} labelHidden />);
+		expect(screen.queryByText(labelText)).not.toBeInTheDocument();
+	});
+
+	// Test for 'modified' prop
+	it('should add "ncids-input--modified" class when modified prop is true', () => {
+		render(<TextInput {...mockTextInput} modified />);
+		const input = screen.getByPlaceholderText(placeholderText);
+		expect(input).toHaveClass('ncids-input--modified');
+	});
+
 	describe('TextInput with error', function () {
 		it('TextInput event handlers ( action, onBlur )', function () {
 			const handleBlurEvent = jest.fn();
@@ -78,32 +133,18 @@ describe('TextInput component', function () {
 			expect(retMockActionObject.hasCorrectTargetEventValue).toBe(true);
 		});
 
-		it('Trigger error and validate', function () {
-			const mockEvent = {
-				event: {
-					target: {
-						value: 'error',
-					},
-				},
-			};
-
-			const setErrorMessage = ({ event }) => {
-				const { value } = event.target;
-				if (value === 'error') {
-					errorMessage = `You typed in "${value}" which generated an error`;
-				} else {
-					errorMessage = '';
-				}
-			};
-
-			setErrorMessage(mockEvent);
+		it('Displays error message when error is present', function () {
+			const errorMessage = 'You typed in "error" which generated an error';
 			render(<TextInput errorMessage={errorMessage} {...mockTextInput} />);
-			const textInput = screen.getByPlaceholderText(placeholderText);
-			fireEvent.change(textInput, { target: { value: 'error' } });
-			const error = screen.getByTestId('tid-error');
 
-			expect(error).toBeInTheDocument();
+			expect(screen.getByTestId('tid-error')).toBeInTheDocument();
 			expect(screen.getByText(errorMessage)).toBeInTheDocument();
+		});
+
+		it('Does not display error message when no error is present', function () {
+			render(<TextInput {...mockTextInput} />);
+
+			expect(screen.queryByTestId('tid-error')).not.toBeInTheDocument();
 		});
 	});
 });

@@ -1,4 +1,4 @@
-import { act, render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { ClientContextProvider } from 'react-fetching-library';
 
@@ -42,20 +42,21 @@ describe('customFetch', () => {
 			}),
 		};
 
-		await act(async () => {
-			render(
-				<MockAnalyticsProvider>
-					<ClientContextProvider client={client}>
-						<ErrorBoundary>
-							<UseCustomQuerySample />
-						</ErrorBoundary>
-					</ClientContextProvider>
-				</MockAnalyticsProvider>
-			);
+		render(
+			<MockAnalyticsProvider>
+				<ClientContextProvider client={client}>
+					<ErrorBoundary>
+						<UseCustomQuerySample />
+					</ErrorBoundary>
+				</ClientContextProvider>
+			</MockAnalyticsProvider>
+		);
+
+		await waitFor(() => {
+			expect(
+				screen.getByText('An error occurred. Please try again later.')
+			).toBeInTheDocument();
 		});
-		expect(
-			screen.getByText('An error occurred. Please try again later.')
-		).toBeInTheDocument();
 	});
 
 	it('should throw an error using a non existent endpoint - Spanish message', async () => {
@@ -80,22 +81,23 @@ describe('customFetch', () => {
 			}),
 		};
 
-		await act(async () => {
-			render(
-				<MockAnalyticsProvider>
-					<ClientContextProvider client={client}>
-						<ErrorBoundary>
-							<UseCustomQuerySample />
-						</ErrorBoundary>
-					</ClientContextProvider>
-				</MockAnalyticsProvider>
-			);
+		render(
+			<MockAnalyticsProvider>
+				<ClientContextProvider client={client}>
+					<ErrorBoundary>
+						<UseCustomQuerySample />
+					</ErrorBoundary>
+				</ClientContextProvider>
+			</MockAnalyticsProvider>
+		);
+
+		await waitFor(() => {
+			expect(
+				screen.getByText(
+					'Se produjo un error. Por favor, vuelva a intentar más tarde.'
+				)
+			).toBeInTheDocument();
 		});
-		expect(
-			screen.getByText(
-				'Se produjo un error. Por favor, vuelva a intentar más tarde.'
-			)
-		).toBeInTheDocument();
 	});
 
 	it('useCustomQuery example should display content and not throw error', async () => {
@@ -125,17 +127,19 @@ describe('customFetch', () => {
 				payload: { contentMessage },
 			}),
 		};
-		await act(async () => {
-			render(
-				<MockAnalyticsProvider>
-					<ClientContextProvider client={client}>
-						<ErrorBoundary>
-							<UseCustomQuerySample id={id} />
-						</ErrorBoundary>
-					</ClientContextProvider>
-				</MockAnalyticsProvider>
-			);
+
+		render(
+			<MockAnalyticsProvider>
+				<ClientContextProvider client={client}>
+					<ErrorBoundary>
+						<UseCustomQuerySample id={id} />
+					</ErrorBoundary>
+				</ClientContextProvider>
+			</MockAnalyticsProvider>
+		);
+
+		await waitFor(() => {
+			expect(screen.getByText(contentMessage)).toBeInTheDocument();
 		});
-		expect(screen.getByText(contentMessage)).toBeInTheDocument();
 	});
 });

@@ -12,11 +12,11 @@ describe('when base path has trailing slash', () => {
 
 	it('will produce paths without params', () => {
 		const { HomePath } = useAppPaths();
-		expect(HomePath()).toEqual('/my/path/');
+		expect(HomePath()).toBe('/my/path/');
 	});
 
 	it('will replace paths with params', () => {
 		const { HomePath } = useAppPaths();
-		expect(HomePath({ foo: 'bar' })).toEqual('/my/path/');
+		expect(HomePath({ foo: 'bar' })).toBe('/my/path/');
 	});
 });
