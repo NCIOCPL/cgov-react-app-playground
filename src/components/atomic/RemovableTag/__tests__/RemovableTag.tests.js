@@ -9,10 +9,10 @@ describe('RemovableTag component', () => {
 		const label = 'Mock Label';
 		const onRemove = jest.fn();
 		render(<RemovableTag key={key} label={label} onRemove={onRemove} />);
-		const tagLabel = screen.queryByTestId('.cts-removable-tag__label');
-		expect(screen.queryByTestId('.cts-removable-tag')).toBeInTheDocument();
+		const tagLabel = screen.getByTestId('.cts-removable-tag__label');
+		expect(screen.getByTestId('.cts-removable-tag')).toBeInTheDocument();
 		expect(
-			screen.queryByTestId('.cts-removable-tag__button')
+			screen.getByTestId('.cts-removable-tag__button')
 		).toBeInTheDocument();
 		expect(tagLabel).toHaveTextContent(label);
 		expect(tagLabel).toBeInTheDocument();

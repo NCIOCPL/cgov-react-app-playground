@@ -1,5 +1,4 @@
-import { act, render } from '@testing-library/react';
-import axios from 'axios';
+import { render } from '@testing-library/react';
 import nock from 'nock';
 import React from 'react';
 import { ClientContextProvider } from 'react-fetching-library';
@@ -12,8 +11,6 @@ import { MockAnalyticsProvider } from '../tracking';
 import Home from '../views/Home';
 
 jest.mock('../store/store.js');
-
-axios.defaults.adapter = require('axios/lib/adapters/http');
 
 describe('App component', () => {
 	let location;
@@ -47,18 +44,15 @@ describe('App component', () => {
 		]);
 
 		const { HomePath } = useAppPaths();
-
-		await act(async () => {
-			render(
-				<MockAnalyticsProvider>
-					<MemoryRouter initialEntries={[HomePath()]}>
-						<ClientContextProvider client={getAxiosClient([])}>
-							<ComponentWithLocation RenderComponent={Home} />
-						</ClientContextProvider>
-					</MemoryRouter>
-				</MockAnalyticsProvider>
-			);
-		});
+		await render(
+			<MockAnalyticsProvider>
+				<MemoryRouter initialEntries={[HomePath()]}>
+					<ClientContextProvider client={getAxiosClient([])}>
+						<ComponentWithLocation RenderComponent={Home} />
+					</ClientContextProvider>
+				</MemoryRouter>
+			</MockAnalyticsProvider>
+		);
 
 		const expectedLocationObject = {
 			pathname: '/',
