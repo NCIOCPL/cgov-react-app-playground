@@ -8,7 +8,7 @@ import { useAppPaths } from './hooks';
 import { Home, ItemDetails, PageNotFound } from './views';
 
 const App = () => {
-	// this should be a DUMB component that just displays our display(group) components
+	// this should be a DUMB component that just displays our display(group) components.
 	const { HomePath, ItemDetailsPath } = useAppPaths();
 
 	return (
