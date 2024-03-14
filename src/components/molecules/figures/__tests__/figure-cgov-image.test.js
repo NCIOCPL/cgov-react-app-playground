@@ -14,7 +14,7 @@ describe('<FigureCgovImage /> component', () => {
 		const figure = screen.getByRole('figure');
 		expect(figure).toBeInTheDocument();
 		// There should be no caption when there is not a credit or caption
-		/* eslint-disable testing-library/no-node-access */
+		// eslint-disable testing-library/no-node-access
 		expect(figure.getElementsByTagName('figcaption')).toHaveLength(0);
 	});
 
@@ -24,7 +24,7 @@ describe('<FigureCgovImage /> component', () => {
 		expect(figure).toBeInTheDocument();
 		expect(figure).toHaveClass('mockstyle');
 		// There should be no caption when there is not a credit or caption
-		/* eslint-disable testing-library/no-node-access */
+		// eslint-disable testing-library/no-node-access
 		expect(figure.getElementsByTagName('figcaption')).toHaveLength(0);
 	});
 

@@ -21,7 +21,7 @@ describe('<FigureCgovVideo /> component', () => {
 		expect(button).toHaveClass('video-preview--container');
 
 		// There should be no caption when there is no caption
-		/* eslint-disable testing-library/no-node-access */
+		// eslint-disable testing-library/no-node-access
 		expect(figure.getElementsByTagName('figcaption')).toHaveLength(0);
 	});
 

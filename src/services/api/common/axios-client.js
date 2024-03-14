@@ -5,7 +5,6 @@ import { buildAxiosRequest } from './buildAxiosRequest';
 
 const axiosInstance = axios.create({
 	timeout: 15000,
-	adapter: 'http',
 });
 
 /**
