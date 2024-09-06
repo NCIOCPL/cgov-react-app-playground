@@ -38,9 +38,7 @@ describe('<YoutubeVideoPlayer /> component', () => {
 
 	it('calls a supplied tracking event on click', async () => {
 		const mockTrackingFn = jest.fn();
-		render(
-			<YoutubeVideoPlayer youtubeId={yid} trackVideoLoad={mockTrackingFn} />
-		);
+		render(<YoutubeVideoPlayer youtubeId={yid} trackVideoLoad={mockTrackingFn} />);
 		fireEvent.click(screen.getByRole('button'));
 		await waitFor(() => {
 			expect(mockTrackingFn).toHaveBeenCalled();
@@ -52,9 +50,7 @@ describe('<YoutubeVideoPlayer /> component', () => {
 		render(<YoutubeVideoPlayer youtubeId={yid} />);
 		fireEvent.click(screen.getByRole('button'));
 		await waitFor(() => {
-			expect(
-				screen.getByText('An error occurred. Please try again later.')
-			).toBeInTheDocument();
+			expect(screen.getByText('An error occurred. Please try again later.')).toBeInTheDocument();
 		});
 	});
 });

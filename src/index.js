@@ -8,10 +8,7 @@ import ReactDOM from 'react-dom';
 import { ClientContextProvider } from 'react-fetching-library';
 
 import App from './App';
-import {
-	getAxiosClient,
-	replacingRequestInterceptor,
-} from './services/api/common';
+import { getAxiosClient, replacingRequestInterceptor } from './services/api/common';
 import * as serviceWorker from './serviceWorker';
 import reducer from './store/reducer';
 import { StateProvider } from './store/store';
@@ -67,17 +64,11 @@ const initialize = ({
 	// their own custom handler.
 	const AnalyticsHoC = ({ children }) =>
 		analyticsHandler === 'EddlAnalyticsHandler' ? (
-			<EddlAnalyticsProvider
-				pageLanguage={language === 'es' ? 'spanish' : 'english'}
-				pageChannel={analyticsChannel}
-				pageContentGroup={analyticsContentGroup}
-				publishedDate={analyticsPublishedDate}>
+			<EddlAnalyticsProvider pageLanguage={language === 'es' ? 'spanish' : 'english'} pageChannel={analyticsChannel} pageContentGroup={analyticsContentGroup} publishedDate={analyticsPublishedDate}>
 				{children}
 			</EddlAnalyticsProvider>
 		) : (
-			<AnalyticsProvider analyticsHandler={analyticsHandler}>
-				{children}
-			</AnalyticsProvider>
+			<AnalyticsProvider analyticsHandler={analyticsHandler}>{children}</AnalyticsProvider>
 		);
 
 	AnalyticsHoC.propTypes = {

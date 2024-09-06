@@ -11,9 +11,7 @@ const Home = () => {
 	const { HomePath, ItemDetailsPath } = useAppPaths();
 
 	// Get items passed into index.js and stored in the context.
-	const [
-		{ altLanguageBasePath, baseHost, title, canonicalHost, siteName, language },
-	] = useStateValue();
+	const [{ altLanguageBasePath, baseHost, title, canonicalHost, siteName, language }] = useStateValue();
 
 	// Get a reference to the tracking function for
 	// analytics.
@@ -42,12 +40,7 @@ const Home = () => {
 		}
 
 		return [
-			<link
-				key="1"
-				rel="alternate"
-				hrefLang={language}
-				href={canonicalHost + HomePath()}
-			/>,
+			<link key="1" rel="alternate" hrefLang={language} href={canonicalHost + HomePath()} />,
 			<link
 				key="2"
 				rel="alternate"
@@ -99,31 +92,21 @@ const Home = () => {
 			<h1>{title}</h1>
 			<div>
 				<p>This is the home view.</p>
-				<p>
-					It can be whatever you like, you don&apos;t even actually need a home
-					view, but most of our apps have something. Please do not overload the
-					home view with a bunch of other views.
-				</p>
+				<p>It can be whatever you like, you don&apos;t even actually need a home view, but most of our apps have something. Please do not overload the home view with a bunch of other views.</p>
 				<h3>3 examples of links</h3>
 				<ul>
 					<li>
-						<Link
-							to={ItemDetailsPath({ id: '6789' })}
-							onClick={handleItemClick}>
+						<Link to={ItemDetailsPath({ id: '6789' })} onClick={handleItemClick}>
 							Item 6789
 						</Link>
 					</li>
 					<li>
-						<Link
-							to={ItemDetailsPath({ id: '12345' })}
-							onClick={handleItemClick}>
+						<Link to={ItemDetailsPath({ id: '12345' })} onClick={handleItemClick}>
 							Item 12345
 						</Link>
 					</li>
 					<li>
-						<Link
-							to={ItemDetailsPath({ id: '99999' })}
-							onClick={handleItemClick}>
+						<Link to={ItemDetailsPath({ id: '99999' })} onClick={handleItemClick}>
 							Non-existent Item
 						</Link>
 					</li>

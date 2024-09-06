@@ -41,9 +41,7 @@ describe('buildAxiosRequest', () => {
 			results: [],
 			links: null,
 		};
-		const scope = nock(baseURL)
-			.get(`${endpoint}${query}`)
-			.reply(200, expectedResponseBody);
+		const scope = nock(baseURL).get(`${endpoint}${query}`).reply(200, expectedResponseBody);
 
 		const actual = await buildAxiosRequest(axiosInstance)(init, options);
 		const { _bodyText, status } = actual;

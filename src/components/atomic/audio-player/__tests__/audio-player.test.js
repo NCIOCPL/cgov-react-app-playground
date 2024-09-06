@@ -22,14 +22,12 @@ describe('<AudioPlayer /> component', () => {
 	});
 
 	it('shows error state when audio throws an error', async () => {
-		const rejectStub = jest
-			.spyOn(window.HTMLMediaElement.prototype, 'play')
-			.mockRejectedValue(
-				new Error({
-					name: 'NotSupportedError',
-					message: 'The element has no supported sources.',
-				})
-			);
+		const rejectStub = jest.spyOn(window.HTMLMediaElement.prototype, 'play').mockRejectedValue(
+			new Error({
+				name: 'NotSupportedError',
+				message: 'The element has no supported sources.',
+			})
+		);
 		render(<AudioPlayer audioSrc="mock.mp3" />);
 		fireEvent.click(screen.getByRole('button'));
 		await waitFor(() => {
@@ -38,9 +36,7 @@ describe('<AudioPlayer /> component', () => {
 	});
 
 	it('plays the specified file', async () => {
-		const playStub = jest
-			.spyOn(window.HTMLMediaElement.prototype, 'play')
-			.mockResolvedValue(true);
+		const playStub = jest.spyOn(window.HTMLMediaElement.prototype, 'play').mockResolvedValue(true);
 
 		render(<AudioPlayer audioSrc="mock.mp3" />);
 		fireEvent.click(screen.getByRole('button'));
@@ -50,13 +46,9 @@ describe('<AudioPlayer /> component', () => {
 	});
 
 	it('pauses playback if file is playing', async () => {
-		const playStub = jest
-			.spyOn(window.HTMLMediaElement.prototype, 'play')
-			.mockResolvedValue(true);
+		const playStub = jest.spyOn(window.HTMLMediaElement.prototype, 'play').mockResolvedValue(true);
 
-		const pauseStub = jest
-			.spyOn(window.HTMLMediaElement.prototype, 'pause')
-			.mockResolvedValue(true);
+		const pauseStub = jest.spyOn(window.HTMLMediaElement.prototype, 'pause').mockResolvedValue(true);
 
 		render(<AudioPlayer audioSrc="mock.mp3" />);
 		fireEvent.click(screen.getByRole('button'));

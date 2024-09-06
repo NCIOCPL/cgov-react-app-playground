@@ -3,16 +3,7 @@ import React from 'react';
 import { useURLQuery } from '../../../hooks';
 import './pager.scss';
 
-const Pager = ({
-	current,
-	totalResults,
-	testid = 'tid-results-pager',
-	keyword,
-	resultsPerPage,
-	previousLabel = 'Previous',
-	nextLabel = 'Next',
-	screenReader = 'Go To Page',
-}) => {
+const Pager = ({ current, totalResults, testid = 'tid-results-pager', keyword, resultsPerPage, previousLabel = 'Previous', nextLabel = 'Next', screenReader = 'Go To Page' }) => {
 	const urlQuery = useURLQuery();
 	const swKeywordKey = /swKeyword/i;
 	// total pages = total results / pageunit
@@ -68,9 +59,7 @@ const Pager = ({
 		const links = [];
 		const decorator = (value) => {
 			return (
-				<li
-					key={`pager__ellipses-${value}`}
-					className={`pager__ellipses--${value}`}>
+				<li key={`pager__ellipses-${value}`} className={`pager__ellipses--${value}`}>
 					...
 				</li>
 			);
@@ -113,28 +102,18 @@ const Pager = ({
 	// @param page: 					Actual page number
 	// @param pageunit: 			Number of items per page (I presume)
 	const ButtonIU = generateLinks();
-	const linkPathPrevious = getLinkPathPrevious(
-		current,
-		keyword,
-		resultsPerPage
-	);
+	const linkPathPrevious = getLinkPathPrevious(current, keyword, resultsPerPage);
 	const linkPathNext = getLinkPathNext(current, keyword, resultsPerPage);
 	const PgPrevious = (
 		<li key={'pager__button-previous'}>
-			<a
-				href={linkPathPrevious}
-				className="pager__button pager__previous"
-				aria-label={`Goto previous, Page ${current - 1}`}>
+			<a href={linkPathPrevious} className="pager__button pager__previous" aria-label={`Goto previous, Page ${current - 1}`}>
 				{`< ${previousLabel}`}
 			</a>
 		</li>
 	);
 	const PgNext = (
 		<li key={'pager__button-next'}>
-			<a
-				href={linkPathNext}
-				className="pager__button pager__next"
-				aria-label={`Goto next, Page ${current + 1}`}>
+			<a href={linkPathNext} className="pager__button pager__next" aria-label={`Goto next, Page ${current + 1}`}>
 				{`${nextLabel} >`}
 			</a>
 		</li>
