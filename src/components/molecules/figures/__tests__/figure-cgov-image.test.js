@@ -29,15 +29,8 @@ describe('<FigureCgovImage /> component', () => {
 	});
 
 	it('creates a figcaption containing caption text when caption is supplied', () => {
-		render(
-			<FigureCgovImage
-				caption="mock caption describing chickens"
-				{...mockFig}
-			/>
-		);
-		expect(
-			screen.getByText('mock caption describing chickens')
-		).toBeInTheDocument();
+		render(<FigureCgovImage caption="mock caption describing chickens" {...mockFig} />);
+		expect(screen.getByText('mock caption describing chickens')).toBeInTheDocument();
 	});
 
 	it('creates a figcaption containing a credit when a credit is supplied', () => {
@@ -49,26 +42,15 @@ describe('<FigureCgovImage /> component', () => {
 		render(<FigureCgovImage enlarge_uri="http://mock.jpg" {...mockFig} />);
 		const enlargeButton = screen.getByText('Enlarge');
 		expect(enlargeButton).toBeInTheDocument();
-		const hiddenText = within(enlargeButton).getByText(
-			'this image in new window'
-		);
+		const hiddenText = within(enlargeButton).getByText('this image in new window');
 		expect(hiddenText).toBeInTheDocument();
 	});
 
 	it("displays spanish text when language='es' is supplied", () => {
-		render(
-			<FigureCgovImage
-				lang="es"
-				enlarge_uri="http://mock.jpg"
-				credit="mock credit"
-				{...mockFig}
-			/>
-		);
+		render(<FigureCgovImage lang="es" enlarge_uri="http://mock.jpg" credit="mock credit" {...mockFig} />);
 		const enlargeButton = screen.getByText('Ampliar');
 		expect(enlargeButton).toBeInTheDocument();
-		const hiddenText = within(enlargeButton).getByText(
-			'- abre en nueva ventana'
-		);
+		const hiddenText = within(enlargeButton).getByText('- abre en nueva ventana');
 		expect(hiddenText).toBeInTheDocument();
 
 		expect(screen.getByText('Crédito: mock credit')).toBeInTheDocument();

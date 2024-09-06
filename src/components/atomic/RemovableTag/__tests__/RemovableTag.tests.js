@@ -11,9 +11,7 @@ describe('RemovableTag component', () => {
 		render(<RemovableTag key={key} label={label} onRemove={onRemove} />);
 		const tagLabel = screen.getByTestId('.cts-removable-tag__label');
 		expect(screen.getByTestId('.cts-removable-tag')).toBeInTheDocument();
-		expect(
-			screen.getByTestId('.cts-removable-tag__button')
-		).toBeInTheDocument();
+		expect(screen.getByTestId('.cts-removable-tag__button')).toBeInTheDocument();
 		expect(tagLabel).toHaveTextContent(label);
 		expect(tagLabel).toBeInTheDocument();
 		const tagButton = screen.getByRole('button');

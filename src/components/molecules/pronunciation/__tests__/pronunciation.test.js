@@ -21,11 +21,7 @@ describe('<Pronunciation /> component', () => {
 		};
 
 		render(<Pronunciation pronunciationObj={payload} language="en" />);
-		expect(
-			screen.getByTestId('tid-term-def-pronunciation')
-		).toBeInTheDocument();
-		expect(screen.getByTestId('tid-term-def-pronunciation')).toHaveTextContent(
-			'(mock phonetic spelling)'
-		);
+		expect(screen.getByTestId('tid-term-def-pronunciation')).toBeInTheDocument();
+		expect(screen.getByTestId('tid-term-def-pronunciation')).toHaveTextContent('(mock phonetic spelling)');
 	});
 });

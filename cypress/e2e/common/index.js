@@ -93,8 +93,7 @@ And('the following links and texts exist on the page', (dataTable) => {
 And('the system returns the no results found page', () => {
 	cy.window().then((win) => {
 		if (win.INT_TEST_APP_PARAMS) {
-			const noResultsPageTitle =
-				i18n.nciSearchResults[win.INT_TEST_APP_PARAMS.language];
+			const noResultsPageTitle = i18n.nciSearchResults[win.INT_TEST_APP_PARAMS.language];
 			cy.get('h1').should('contain', noResultsPageTitle);
 		}
 	});

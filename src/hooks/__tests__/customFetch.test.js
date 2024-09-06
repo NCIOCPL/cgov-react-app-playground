@@ -53,9 +53,7 @@ describe('customFetch', () => {
 		);
 
 		await waitFor(() => {
-			expect(
-				screen.getByText('An error occurred. Please try again later.')
-			).toBeInTheDocument();
+			expect(screen.getByText('An error occurred. Please try again later.')).toBeInTheDocument();
 		});
 	});
 
@@ -92,11 +90,7 @@ describe('customFetch', () => {
 		);
 
 		await waitFor(() => {
-			expect(
-				screen.getByText(
-					'Se produjo un error. Por favor, vuelva a intentar más tarde.'
-				)
-			).toBeInTheDocument();
+			expect(screen.getByText('Se produjo un error. Por favor, vuelva a intentar más tarde.')).toBeInTheDocument();
 		});
 	});
 

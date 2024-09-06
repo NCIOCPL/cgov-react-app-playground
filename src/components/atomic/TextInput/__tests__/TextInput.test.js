@@ -106,8 +106,7 @@ describe('TextInput component', function () {
 				retMockActionObject = {
 					...mockActionObject,
 					isExecuted: true,
-					hasCorrectTargetEventValue:
-						value === mockActionEvent.event.target.value,
+					hasCorrectTargetEventValue: value === mockActionEvent.event.target.value,
 				};
 			};
 

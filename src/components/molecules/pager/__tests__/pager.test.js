@@ -32,13 +32,7 @@ describe('SPager(English)', () => {
 	it('Should load the pager component', () => {
 		render(
 			<MemoryRouter initialEntries={['/?swKeyword=tumor']}>
-				<Pager
-					current={current}
-					totalResults={200}
-					resultsPerPage={20}
-					language={'en'}
-					keyword={'tumor'}
-				/>
+				<Pager current={current} totalResults={200} resultsPerPage={20} language={'en'} keyword={'tumor'} />
 			</MemoryRouter>
 		);
 		expect(screen.getByRole('navigation')).toBeInTheDocument();
@@ -51,58 +45,32 @@ describe('SPager(English)', () => {
 	it('Nav element is there and link options', () => {
 		render(
 			<MemoryRouter initialEntries={['/?swKeyword=tumor']}>
-				<Pager
-					current={current}
-					totalResults={200}
-					resultsPerPage={20}
-					language={'en'}
-					keyword={'tumor'}
-				/>
+				<Pager current={current} totalResults={200} resultsPerPage={20} language={'en'} keyword={'tumor'} />
 			</MemoryRouter>
 		);
 		expect(screen.queryAllByText(/.../)[1]).toHaveClass('show-for-sr');
 		expect(screen.queryAllByText(/.../)[2]).toHaveClass('show-for-sr');
 		expect(screen.getAllByRole('link')[0]).toHaveTextContent('< Previous');
 		expect(screen.getAllByRole('link')[3]).toHaveClass('total_pages');
-		expect(screen.getAllByRole('listitem')[4]).toHaveClass(
-			'pager__ellipses--right'
-		);
+		expect(screen.getAllByRole('listitem')[4]).toHaveClass('pager__ellipses--right');
 	});
 	// counter 3
 	it('Href and urls', () => {
 		render(
 			<MemoryRouter initialEntries={['/?swKeyword=tumor']}>
-				<Pager
-					current={current}
-					totalResults={200}
-					resultsPerPage={20}
-					language={'en'}
-					keyword={'tumor'}
-				/>
+				<Pager current={current} totalResults={200} resultsPerPage={20} language={'en'} keyword={'tumor'} />
 			</MemoryRouter>
 		);
 		expect(screen.queryAllByText(/3/)[0]).toHaveClass('pager__button active');
-		expect(screen.getAllByRole('link')[2]).toHaveAttribute(
-			'href',
-			'?swKeyword=tumor&page=2&pageunit=20'
-		);
-		expect(screen.getAllByRole('link')[1]).toHaveAttribute(
-			'href',
-			'?swKeyword=tumor&page=1&pageunit=20'
-		);
+		expect(screen.getAllByRole('link')[2]).toHaveAttribute('href', '?swKeyword=tumor&page=2&pageunit=20');
+		expect(screen.getAllByRole('link')[1]).toHaveAttribute('href', '?swKeyword=tumor&page=1&pageunit=20');
 	});
 
 	// Test when current page is 1
 	it('should not render previous button when current page is 1', () => {
 		render(
 			<MemoryRouter initialEntries={['/?swKeyword=tumor']}>
-				<Pager
-					current={1}
-					totalResults={200}
-					resultsPerPage={20}
-					language={'en'}
-					keyword={'tumor'}
-				/>
+				<Pager current={1} totalResults={200} resultsPerPage={20} language={'en'} keyword={'tumor'} />
 			</MemoryRouter>
 		);
 		expect(screen.queryByText(/< Previous/)).not.toBeInTheDocument();
@@ -112,13 +80,7 @@ describe('SPager(English)', () => {
 	it('should not render next button when current page is the last page', () => {
 		render(
 			<MemoryRouter initialEntries={['/?swKeyword=tumor']}>
-				<Pager
-					current={10}
-					totalResults={200}
-					resultsPerPage={20}
-					language={'en'}
-					keyword={'tumor'}
-				/>
+				<Pager current={10} totalResults={200} resultsPerPage={20} language={'en'} keyword={'tumor'} />
 			</MemoryRouter>
 		);
 		expect(screen.queryByText(/Next >/)).not.toBeInTheDocument();
@@ -128,13 +90,7 @@ describe('SPager(English)', () => {
 	it('should only render one page button when there is only one page', () => {
 		render(
 			<MemoryRouter initialEntries={['/?swKeyword=tumor']}>
-				<Pager
-					current={1}
-					totalResults={20}
-					resultsPerPage={20}
-					language={'en'}
-					keyword={'tumor'}
-				/>
+				<Pager current={1} totalResults={20} resultsPerPage={20} language={'en'} keyword={'tumor'} />
 			</MemoryRouter>
 		);
 		expect(screen.queryAllByRole('listitem')).toHaveLength(1);

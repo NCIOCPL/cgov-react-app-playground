@@ -13,16 +13,7 @@ describe('EddlAnalyticsProvider', () => {
 		const analyticsHandler = EddlAnalyticsHandler(window);
 
 		render(
-			<EddlAnalyticsProvider
-				analyticsHandler={analyticsHandler}
-				pageName="testPage"
-				pageTitle="Test Page"
-				pageMetaTitle="Test Meta Title"
-				pageLanguage="English"
-				pageAudience="Test Audience"
-				pageChannel="Test Channel"
-				pageContentGroup="Test Content Group"
-				pagePublishedDate="Test Date">
+			<EddlAnalyticsProvider analyticsHandler={analyticsHandler} pageName="testPage" pageTitle="Test Page" pageMetaTitle="Test Meta Title" pageLanguage="English" pageAudience="Test Audience" pageChannel="Test Channel" pageContentGroup="Test Content Group" pagePublishedDate="Test Date">
 				{children}
 			</EddlAnalyticsProvider>
 		);
