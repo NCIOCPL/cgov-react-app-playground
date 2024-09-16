@@ -105,6 +105,7 @@ const Home = () => {
 					home view with a bunch of other views.
 				</p>
 				<h3>3 examples of links</h3>
+
 				<ul>
 					<li>
 						<Link
@@ -128,7 +129,7 @@ const Home = () => {
 						</Link>
 					</li>
 					<li>
-						<Link to="/chicken" onClick={handleItemClick}>
+						<Link to={`${HomePath()}chicken`} onClick={handleItemClick}>
 							Non-existent Page
 						</Link>
 					</li>

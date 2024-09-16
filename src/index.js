@@ -135,6 +135,7 @@ if (process.env.NODE_ENV !== 'production') {
 		...appParams,
 		...integrationTestOverrides,
 		...{ basePath: getProductTestBase() },
+		apiEndpoint: `${getProductTestBase()}/api/sampleapi/v1/`,
 	};
 	initialize(dictSettings);
 }

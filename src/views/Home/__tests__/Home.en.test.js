@@ -11,7 +11,7 @@ jest.mock('../../../store/store.js');
 const analyticsHandler = jest.fn(() => {});
 
 describe('Home component(English)', () => {
-	it('should links on home page', async () => {
+	it('should have links on home page', async () => {
 		const basePath = '/';
 		const canonicalHost = 'https://www.example.gov';
 		const language = 'en';
