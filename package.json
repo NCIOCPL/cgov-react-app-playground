@@ -79,16 +79,15 @@
 	},
 	"browserslist": {
 		"production": [
-			">0.2%",
+			">1%",
+			"last 2 versions",
 			"not dead",
-			"not op_mini all",
-			"ie 11"
+			"not IE 11"
 		],
 		"development": [
 			"last 1 chrome version",
 			"last 1 firefox version",
-			"last 1 safari version",
-			"ie 11"
+			"last 1 safari version"
 		]
 	},
 	"cypress-cucumber-preprocessor": {
